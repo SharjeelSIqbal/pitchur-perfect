@@ -6,7 +6,7 @@ export default function Header() {
   <>
   <header className="mobile-only header-border-bottom">
     <div className="col-100 row justify-center-all gochi-hand white-font title-font-size margin-reset">
-      <h1>Pitchur Perfect</h1>
+      <h1 className="title">Pitchur Perfect</h1>
     </div>
     <div className=" col-100 row justify-center-all white-font font-pair">
       <h3>Capture your perfect sound</h3>
