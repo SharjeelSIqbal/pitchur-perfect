@@ -48,7 +48,7 @@ export default class Recordings extends React.Component {
   }
 
   deleteAudio(audioUrl) {
-    const recordings = this.state.videos.filter(audio => audio !== audioUrl);
+    const recordings = this.state.recordings.filter(audio => audio !== audioUrl);
     this.setState({ recordings });
   }
 
