@@ -1,11 +1,18 @@
 import React from 'react';
-import Recordings from '../components/Recordings';
-
+import Recorder from '../components/Recordings';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 export default function Home(props) {
 
   return (
-    <>
-      <Recordings />
-    </>
+  <div>
+
+    <div className="background-color">
+      <Header />
+      <Recorder />
+    </div>
+    <Footer />
+  </div>
+
   );
 }

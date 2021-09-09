@@ -54,24 +54,31 @@ export default class Recordings extends React.Component {
 
   render() {
     const { recordings, recording } = this.state;
+    const recordInner = (
+            <div className="outer-record-shell row justify-center-all">
+              <div className="inner-record-shell">
+              </div>
+            </div>
+    );
+
     return (
-      <div>
-        <div>
-          {!recording && <button onClick={e => this.startRecording(e)}>Record</button>}
-          {recording && <button onClick={e => this.stopRecording(e)}>Stop</button>}
+      <>
+        <div className="row justify-center-all padding-record">
+          {!recording && <button onClick={e => this.startRecording(e)} className="col-100 outline record-button row justify-center-all">{recordInner}</button>}
+          {recording && <button onClick={e => this.stopRecording(e)} className="col-100 outline record-button row justify-center-all">{recordInner}</button>}
         </div>
-        <div>
-          <h3>Audio Recordings</h3>
+        <div className="row justify-center-all padding-record">
           {recordings.map(audioURL => (
             <div key={audioURL}>
-            <audio controls="controls">
-              <source src={audioURL} />
-            </audio>
+              <audio controls="controls">
+                <source src={audioURL} />
+              </audio>
             </div>
           )
           )}
         </div>
-      </div>
+
+      </>
     );
   }
 }
