@@ -60,12 +60,13 @@ export default class Recordings extends React.Component {
               </div>
             </div>
     );
+    const buttonClassName = 'col-100 outline record-button row justify-center-all';
 
     return (
       <>
         <div className="row justify-center-all padding-record">
-          {!recording && <button onClick={e => this.startRecording(e)} className="col-100 outline record-button row justify-center-all">{recordInner}</button>}
-          {recording && <button onClick={e => this.stopRecording(e)} className="col-100 outline record-button row justify-center-all">{recordInner}</button>}
+          {!recording && <button onClick={e => this.startRecording(e)} className={buttonClassName}>{recordInner}</button>}
+          {recording && <button onClick={e => this.stopRecording(e)} className={buttonClassName}>{recordInner}</button>}
         </div>
         <div className="row justify-center-all padding-record">
           {recordings.map(audioURL => (

@@ -6,7 +6,6 @@ export default function Home(props) {
 
   return (
   <div>
-
     <div className="background-color">
       <Header />
       <Recorder />
