@@ -2,6 +2,7 @@ require('dotenv/config');
 const express = require('express');
 const pg = require('pg');
 const ClientError = require('./client-error');
+const uploadRecordingsMiddleware = require('./recordings-middleware');
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -27,12 +28,13 @@ app.get('/api/recordings', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/recordings', (req, res, next) => {
-  const { userId, url, title, recordingLength } = req.body;
+app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
+  const { userId, title, url, recordingLength } = req.body;
   if (!userId || !url || !title || !recordingLength) {
     throw new ClientError(400, 'bad request');
   }
-  const params = [userId, url, title, recordingLength];
+  const recordingUrl = `/voice/${title}`;
+  const params = [userId, recordingUrl, title, recordingLength];
   const sql = `
   insert into "recordings" ("userId", "url", "title", "recordingLength")
   values ($1, $2, $3, $4)
