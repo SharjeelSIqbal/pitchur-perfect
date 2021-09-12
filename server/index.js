@@ -29,11 +29,11 @@ app.get('/api/recordings', (req, res, next) => {
 });
 
 app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
-  const { userId, title, url, recordingLength } = req.body;
-  if (!userId || !url || !title || !recordingLength) {
+  const { userId, title, recordingLength } = req.body;
+  if (!userId || !title || !recordingLength) {
     throw new ClientError(400, 'bad request');
   }
-  const recordingUrl = `/voice/${title}`;
+  const recordingUrl = `/voice/${req.file.filename}`;
   const params = [userId, recordingUrl, title, recordingLength];
   const sql = `
   insert into "recordings" ("userId", "url", "title", "recordingLength")

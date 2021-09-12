@@ -58,7 +58,7 @@ export default class Recordings extends React.Component {
   saveAudio() {
     const blob = new Blob(this.chunks, { type: 'audio/webm' });
     const audioURL = URL.createObjectURL(blob);
-    this.file = new File([blob], 'audio', { type: 'audio/webm' });
+    this.file = new File([blob], `${blob}.webm`, { type: 'audio/webm' });
     this.setState({ recordings: [audioURL], formButtons: false });
   }
 
@@ -67,11 +67,8 @@ export default class Recordings extends React.Component {
     const formData = new FormData();
     const userId = 1;
     const title = this.state.title;
-    const fileName = title.split(' ').join('-');
-    const url = `/voice/${fileName}`;
     const recordingLength = this.state.duration;
     formData.append('userId', userId);
-    formData.append('url', url);
     formData.append('title', title);
     formData.append('recordingLength', recordingLength);
     formData.append('audio', this.file, this.file.name);
