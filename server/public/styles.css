@@ -63,6 +63,14 @@ button {
   background-image: linear-gradient(#5158fe, #e651fe);
 }
 
+.margin-0-auto {
+  margin: 0 auto;
+}
+
+.button-container {
+  max-width: 400px;
+}
+
 .inner-record-shell {
   height: 110px;
   width: 110px;
@@ -77,11 +85,54 @@ button {
   border-radius: 50%;
 }
 
+.padding-input {
+  margin: 2rem;
+}
+
+.title-input {
+  text-align: center;
+  font-family: "Gochi Hand", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 30px;
+  width: 250px;
+  height: 2rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.title-input:focus {
+  outline-color: #5268fe;
+}
+
+.submit-button {
+  background-color: #83b000;
+}
+
+.discard-button {
+  background-color: red;
+}
+
+.button {
+  font-size: 20px;
+  color: whitesmoke;
+  border: none;
+  border-radius: 0.5rem;
+  width: 100px;
+  height: 3rem;
+}
+
 audio::-webkit-media-controls-play-button {
   background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2230%22%20viewBox%3D%220%200%2032%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M12.8%2021.695L22.4%2015.08L12.8%208.465V21.695ZM16%200.380005C7.168%200.380005%200%206.96561%200%2015.08C0%2023.1944%207.168%2029.78%2016%2029.78C24.832%2029.78%2032%2023.1944%2032%2015.08C32%206.96561%2024.832%200.380005%2016%200.380005ZM16%2026.84C8.944%2026.84%203.2%2021.5627%203.2%2015.08C3.2%208.59731%208.944%203.32%2016%203.32C23.056%203.32%2028.8%208.59731%2028.8%2015.08C28.8%2021.5627%2023.056%2026.84%2016%2026.84Z%22%20fill%3D%22url(%23paint0_linear)%22%2F%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22paint0_linear%22%20x1%3D%2216%22%20y1%3D%220.380005%22%20x2%3D%2216%22%20y2%3D%2229.78%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%0A%3Cstop%20stop-color%3D%22%235158FE%22%2F%3E%0A%3Cstop%20offset%3D%220.786458%22%20stop-color%3D%22%23E651FE%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3C%2Fsvg%3E%0A");
 }
 
+.padding-button-bottom {
+  padding-bottom: 3rem;
+}
+
 @media only screen and (min-width: 762px) {
+  .button-container {
+    max-width: 600px;
+  }
+
   .record-button {
     height: 400px;
     width: 400px;
@@ -126,5 +177,10 @@ audio::-webkit-media-controls-play-button {
 
   .nav-color {
     background-color: #5258fe;
+  }
+
+  .title-input {
+    width: 400px;
+    height: 3rem;
   }
 }
