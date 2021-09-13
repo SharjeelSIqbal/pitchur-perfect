@@ -37,19 +37,19 @@ export default class Recordings extends React.Component {
 
   startRecording(e) {
     e.preventDefault();
-    this.setState({ recordings: [] });
+    this.setState({ recordings: null });
     this.chunks = [];
     this.mediaRecorder.start(10);
     this.setState({ recording: true, formInputs: false, duration: 0 }, () => {
-      this.time = setInterval(() => this.setState({ duration: this.state.duration + 1 }), 1000);
+      this.startTime = Date.now();
     });
   }
 
   stopRecording(e) {
     e.preventDefault();
     this.mediaRecorder.stop();
-    clearInterval(this.time);
-    this.setState({ recording: false, formInputs: true });
+    this.endTime = Math.floor((Date.now() - this.startTime) / 1000);
+    this.setState({ recording: false, formInputs: true, duration: this.endTime });
     this.captureAudio();
   }
 
