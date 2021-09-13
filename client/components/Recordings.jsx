@@ -40,6 +40,7 @@ export default class Recordings extends React.Component {
 
   startRecording(e) {
     e.preventDefault();
+    this.setState({ recordings: [] });
     this.chunks = [];
     this.mediaRecorder.start(10);
     this.setState({ recording: true, formInputs: false, duration: 0 }, () => {
@@ -102,16 +103,6 @@ export default class Recordings extends React.Component {
             </div>
     );
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
-    const submitButton = (
-      <button type="submit">
-        Submit
-      </button>
-    );
-    const discardButton = (
-      <button onClick={this.discardAudio}>
-        Discard
-      </button>
-    );
     return (
       <form onSubmit={this.saveAudioToProfile} action="submit" ref={this.form}>
           <div className="row justify-center-all">
@@ -136,10 +127,21 @@ export default class Recordings extends React.Component {
         )
         )}
         </div>
-        <div className="row jusitfy-evenly">
-        {formInputs && submitButton}
-        {formInputs && discardButton}
-        </div>
+        {formInputs && (
+        <div className="button-container margin-0-auto">
+          <div className="padding-button-bottom col-100 row justify-evenly">
+            <div className="row justify-center-all col-50">
+              <button className="button discard-button" onClick={this.discardAudio}>
+                Discard
+              </button>
+            </div>
+            <div className="col-50 row justify-center-all">
+              <button className="button submit-button" type="submit">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>)}
       </form>
 
     );
