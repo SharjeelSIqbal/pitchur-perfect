@@ -2,8 +2,6 @@ import React from 'react';
 export default class Recordings extends React.Component {
   constructor(props) {
     super(props);
-    this.audio = React.createRef();
-    this.form = React.createRef();
     this.state = {
       recording: false,
       recordings: [],
@@ -11,8 +9,7 @@ export default class Recordings extends React.Component {
       title: '',
       duration: 0
     };
-    this.saveAudio = this.saveAudio.bind(this);
-    this.deleteAudio = this.deleteAudio.bind(this);
+    this.captureAudio = this.captureAudio.bind(this);
     this.startRecording = this.startRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
     this.saveAudioToProfile = this.saveAudioToProfile.bind(this);
@@ -53,14 +50,14 @@ export default class Recordings extends React.Component {
     this.mediaRecorder.stop();
     clearInterval(this.time);
     this.setState({ recording: false, formInputs: true });
-    this.saveAudio();
+    this.captureAudio();
   }
 
-  saveAudio() {
+  captureAudio() {
     const blob = new Blob(this.chunks, { type: 'audio/webm' });
     const audioURL = URL.createObjectURL(blob);
-    this.file = new File([blob], `${blob}.webm`, { type: 'audio/webm' });
-    this.setState({ recordings: [audioURL], formButtons: false });
+    this.file = new File([blob], `${Date.now()}.webm`, { type: 'audio/webm' });
+    this.setState({ recordings: audioURL, formButtons: false });
   }
 
   saveAudioToProfile(e) {
@@ -104,7 +101,7 @@ export default class Recordings extends React.Component {
     );
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
     return (
-      <form onSubmit={this.saveAudioToProfile} action="submit" ref={this.form}>
+      <form onSubmit={this.saveAudioToProfile} action="submit">
           <div className="row justify-center-all">
             {formInputs &&
             <div className="padding-input">
@@ -117,13 +114,10 @@ export default class Recordings extends React.Component {
           {recording && <button onClick={e => this.stopRecording(e)} className={recordButtonClassName}>{recordInner}</button>}
         </div>
         <div className="row justify-center-all padding-record">
-        {recordings.map(audioURL => (
-          <div key={audioURL}>
-              <audio controls="controls" ref={this.audio}>
-                <source src={audioURL} />
+        {formInputs && (
+              <audio controls="controls">
+                <source src={recordings} />
               </audio>
-          </div>
-        )
         )}
         </div>
         {formInputs && (
