@@ -112,7 +112,6 @@ export default class Recordings extends React.Component {
             </div>
             }
           </div>
-        {recording && <div><h3>Seconds: {this.state.duration}</h3></div>}
         <div className="row justify-center-all padding-record">
           {!recording && <button onClick={e => this.startRecording(e)} className={recordButtonClassName}>{recordInner}</button>}
           {recording && <button onClick={e => this.stopRecording(e)} className={recordButtonClassName}>{recordInner}</button>}
