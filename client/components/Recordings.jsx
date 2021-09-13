@@ -116,7 +116,7 @@ export default class Recordings extends React.Component {
         <div className="row justify-center-all padding-record">
         {formInputs && (
               <audio controls="controls">
-                <source src={recordings} />
+                <source src={recordings[0]} />
               </audio>
         )}
         </div>
