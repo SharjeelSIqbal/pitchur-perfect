@@ -53,6 +53,10 @@ button {
   overflow: scroll;
 }
 
+.footer-margin {
+  margin: 0 0 4.5rem;
+}
+
 .outline {
   background-color: #ccc;
 }
@@ -229,7 +233,8 @@ audio::-webkit-media-controls-play-button {
   .background-color {
     background-image: none;
     background-color: whitesmoke;
-    height: 100vh;
+    padding-bottom: 5rem;
+    height: 100%;
   }
 
   .nav-color {

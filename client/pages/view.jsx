@@ -39,7 +39,7 @@ export default class UserView extends React.Component {
           }
           </div>
         </div>
-        <div>
+        <div className="mobile-only footer-margin">
           <Footer showFooter="hide"/>
         </div>
       </>
