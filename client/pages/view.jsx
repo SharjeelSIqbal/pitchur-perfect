@@ -10,7 +10,6 @@ export default class UserView extends React.Component {
       openAudio: false,
       recordings: []
     };
-    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
@@ -20,22 +19,18 @@ export default class UserView extends React.Component {
       .catch(err => console.error(err));
   }
 
-  handleScroll(e) {
-
-  }
-
   render() {
-
     return (
       <>
         <div className="background-color">
           <Header />
           <div className="row wrap margin-0-auto">
-          {this.state.recordings.map(element => {
-            return (
-              <ViewRecording key={element.url} recording={element} />
-            );
-          })
+          {
+            this.state.recordings.map(element => {
+              return (
+                <ViewRecording key={element.url} recording={element} />
+              );
+            })
           }
           </div>
         </div>

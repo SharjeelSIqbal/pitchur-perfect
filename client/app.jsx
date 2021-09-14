@@ -20,7 +20,6 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    // Setting up routes using the hashRoute from code-solutions
     if (route.path === '') {
       return <Home />;
     }

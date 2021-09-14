@@ -1,3 +1,4 @@
+.pointer,
 .title,
 svg,
 button {
@@ -42,7 +43,6 @@ button {
 
 .background-color {
   background-image: linear-gradient(#5158fe, #e651fe);
-  height: 100%;
 }
 
 .padding-record {
@@ -233,8 +233,6 @@ audio::-webkit-media-controls-play-button {
   .background-color {
     background-image: none;
     background-color: whitesmoke;
-    padding-bottom: 5rem;
-    height: 100%;
   }
 
   .nav-color {
