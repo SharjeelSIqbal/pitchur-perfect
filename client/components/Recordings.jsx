@@ -60,6 +60,24 @@ export default class Recordings extends React.Component {
     this.setState({ recordings: audioURL, formButtons: false });
   }
 
+  time(duration) {
+    let secondsString = '';
+    let minutesString = '';
+    const seconds = duration % 60;
+    if (seconds < 10) {
+      secondsString = `0${seconds}`;
+    } else if (seconds > 10) {
+      secondsString = `${seconds}`;
+    }
+    const minutes = Math.trunc(duration / 60);
+    if (minutes < 10) {
+      minutesString = `0${minutes}`;
+    } else {
+      minutesString = `${minutes}`;
+    }
+    return `${minutesString}:${secondsString}`;
+  }
+
   saveAudioToProfile(e) {
     e.preventDefault();
     const formData = new FormData();
@@ -68,7 +86,7 @@ export default class Recordings extends React.Component {
     const recordingLength = this.state.duration;
     formData.append('userId', userId);
     formData.append('title', title);
-    formData.append('recordingLength', recordingLength);
+    formData.append('recordingLength', this.time(recordingLength));
     formData.append('audio', this.file, this.file.name);
     fetch('/api/recordings', {
       method: 'POST',
@@ -101,7 +119,7 @@ export default class Recordings extends React.Component {
     );
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
     return (
-      <form onSubmit={this.saveAudioToProfile} action="submit">
+      <form className="background-color" onSubmit={this.saveAudioToProfile} action="submit">
           <div className="row justify-center-all">
             {formInputs &&
             <div className="padding-input">

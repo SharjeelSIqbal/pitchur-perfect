@@ -1,3 +1,4 @@
+.pointer,
 .title,
 svg,
 button {
@@ -48,8 +49,21 @@ button {
   padding: 3rem;
 }
 
+.scroll {
+  overflow: scroll;
+}
+
+.footer-margin {
+  margin: 0 0 4.5rem;
+}
+
 .outline {
-  background-color: lightgray;
+  background-color: #ccc;
+}
+
+.remove-start-margin {
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 
 .record-button {
@@ -120,6 +134,30 @@ button {
   height: 3rem;
 }
 
+.recording-view-container {
+  margin: 1rem 0;
+  padding: 1rem;
+  width: 100%;
+  background-color: white;
+  border-radius: 2rem;
+}
+
+.view-container {
+  width: 90%;
+}
+
+.openAudio {
+  overflow: scroll;
+  transition: height 1s;
+  height: 75px;
+}
+
+.closeAudio {
+  overflow: scroll;
+  transition: height 1s;
+  height: 0;
+}
+
 audio::-webkit-media-controls-play-button {
   background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2230%22%20viewBox%3D%220%200%2032%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M12.8%2021.695L22.4%2015.08L12.8%208.465V21.695ZM16%200.380005C7.168%200.380005%200%206.96561%200%2015.08C0%2023.1944%207.168%2029.78%2016%2029.78C24.832%2029.78%2032%2023.1944%2032%2015.08C32%206.96561%2024.832%200.380005%2016%200.380005ZM16%2026.84C8.944%2026.84%203.2%2021.5627%203.2%2015.08C3.2%208.59731%208.944%203.32%2016%203.32C23.056%203.32%2028.8%208.59731%2028.8%2015.08C28.8%2021.5627%2023.056%2026.84%2016%2026.84Z%22%20fill%3D%22url(%23paint0_linear)%22%2F%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22paint0_linear%22%20x1%3D%2216%22%20y1%3D%220.380005%22%20x2%3D%2216%22%20y2%3D%2229.78%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%0A%3Cstop%20stop-color%3D%22%235158FE%22%2F%3E%0A%3Cstop%20offset%3D%220.786458%22%20stop-color%3D%22%23E651FE%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3C%2Fsvg%3E%0A");
 }
@@ -128,7 +166,29 @@ audio::-webkit-media-controls-play-button {
   padding-bottom: 3rem;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
+.background-color-white {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 2;
+}
+
 @media only screen and (min-width: 762px) {
+  .wrap-container {
+    width: 45%;
+  }
+
+  .recording-view-container {
+    overflow: scroll;
+    width: 100%;
+  }
+
   .button-container {
     max-width: 600px;
   }

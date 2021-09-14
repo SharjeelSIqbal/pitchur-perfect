@@ -10,7 +10,9 @@ export default function Home(props) {
       <Header />
       <Recorder />
     </div>
+    <div className="footer-margin mobile-only">
     <Footer />
+    </div>
   </div>
 
   );

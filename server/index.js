@@ -18,13 +18,25 @@ app.use(staticMiddleware);
 
 app.use(express.json());
 
-app.get('/api/recordings', (req, res, next) => {
+app.get('/api/recordings/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!userId || userId < 1) {
+    throw new ClientError(400, 'please enter a valid userId');
+  }
   const sql = `
   select *
   from "recordings"
+  where "userId" = ${userId}
+  order by "recordingId" desc
   `;
   db.query(sql)
-    .then(result => res.status(200).json(result.rows))
+    .then(result => {
+
+      if (!result.rows[0]) {
+        throw new ClientError(404, 'userId not available');
+      }
+      res.status(200).json(result.rows);
+    })
     .catch(err => next(err));
 });
 

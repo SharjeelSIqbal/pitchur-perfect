@@ -1,15 +1,23 @@
-
 .row {
   display: flex;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .justify-evenly {
   justify-content: space-evenly;
-  align-items: center;
 }
 
 .justify-center-all {
   justify-content: center;
+}
+
+.justify-between,
+.justify-center-all,
+.justify-evenly,
+.align-center {
   align-items: center;
 }
 
