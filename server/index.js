@@ -27,6 +27,7 @@ app.get('/api/recordings/:userId', (req, res, next) => {
   select *
   from "recordings"
   where "userId" = ${userId}
+  order by "recordingId" desc
   `;
   db.query(sql)
     .then(result => {
