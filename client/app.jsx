@@ -1,6 +1,7 @@
 import React from 'react';
 import View from './pages/view';
 import Home from './pages/home';
+import Pitch from './pages/pitch';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -25,6 +26,9 @@ export default class App extends React.Component {
     }
     if (route.path === 'view') {
       return <View />;
+    }
+    if (route.path === 'pitch') {
+      return <Pitch />;
     }
   }
 

@@ -6,7 +6,7 @@ export default function Home(props) {
 
   return (
   <div>
-    <div className="background-color">
+    <div>
       <Header />
       <Recorder />
     </div>
