@@ -2,7 +2,6 @@ import React from 'react';
 import { PitchDetector } from 'pitchy';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { abs } from 'mathjs';
 
 export default class Pitch extends React.Component {
   constructor(props) {
@@ -53,7 +52,7 @@ export default class Pitch extends React.Component {
     let diff = 0;
     this.state.notes.forEach(element => {
       diff = this.state.currentFrequency - element.frequency;
-      if (abs(diff) < abs(recordDifference)) {
+      if (Math.abs(diff) < Math.abs(recordDifference)) {
         this.closestNote = element.note;
         this.closestOctave = element.octave;
         this.closestNoteFrequency = element.frequency;

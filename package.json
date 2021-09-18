@@ -33,7 +33,6 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mathjs": "^9.4.5",
     "multer": "^1.4.3",
     "pg": "^8.6.0",
     "pitchy": "^2.0.3",
