@@ -219,6 +219,26 @@ audio::-webkit-media-controls-play-button {
   color: green;
 }
 
+.key {
+  background-color: white;
+  height: 300px;
+  width: 60px;
+  border: 2px solid black;
+}
+
+.piano {
+  display: flex;
+}
+
+.keyText {
+  position: relative;
+  color: black;
+  font-weight: 600;
+  font-size: 36px;
+  margin-top: 240px;
+  pointer-events: none;
+}
+
 @media only screen and (min-width: 762px) {
   .wrap-container {
     width: 45%;
