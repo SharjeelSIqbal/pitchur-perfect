@@ -224,19 +224,37 @@ audio::-webkit-media-controls-play-button {
   height: 300px;
   width: 60px;
   border: 2px solid black;
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.note-to-key {
+  bottom: 0;
+  left: 1.2rem;
 }
 
 .piano {
   display: flex;
+  overflow-x: scroll;
+  width: 3000px;
 }
 
-.keyText {
+.flat {
   position: relative;
-  color: black;
-  font-weight: 600;
-  font-size: 36px;
-  margin-top: 240px;
-  pointer-events: none;
+  background-color: black;
+  margin: 0 -17px;
+  height: 200px;
+  width: 30px;
+  z-index: 2;
+}
+
+.piano-scroll {
+  overflow-x: scroll;
+  overflow-y: scroll;
+  max-width: 1500px;
 }
 
 @media only screen and (min-width: 762px) {

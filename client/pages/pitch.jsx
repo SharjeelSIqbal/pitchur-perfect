@@ -2,6 +2,7 @@ import React from 'react';
 import { PitchDetector } from 'pitchy';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Piano from '../components/piano';
 
 export default class Pitch extends React.Component {
   constructor(props) {
@@ -114,6 +115,9 @@ export default class Pitch extends React.Component {
         </div>
         <div className="note-margin col-100 row justify-center-all">
           <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
+        </div>
+        <div>
+          <Piano notes={this.state.notes} />
         </div>
         <div>
           <Footer />

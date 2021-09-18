@@ -3,7 +3,6 @@ import View from './pages/view';
 import Home from './pages/home';
 import Pitch from './pages/pitch';
 import parseRoute from './lib/parse-route';
-import Piano from './components/Piano';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,10 +35,10 @@ export default class App extends React.Component {
   render() {
     return (
     <>
-    <Piano />
-    {/* <div className="background-color">
+
+    <div className="background-color">
     {this.renderPage()}
-    </div> */}
+    </div>
     </>
     );
   }

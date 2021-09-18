@@ -2,29 +2,14 @@ import React from 'react';
 import Key from './key';
 
 export default class Piano extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-    this.note = {
-      frequency: 440
-    };
-  }
 
   render() {
-
     return (
+      <div className="piano-scroll">
         <div className="piano">
-          <Key note="d"/>
-          <Key note="d" />
-          <Key note="d" />
-          <Key note="d" />
-          <Key note="d" />
-          <Key note="d" />
-          <Key note="d" />
-          <Key note="d" />
+          {this.props.notes ? this.props.notes.map(element => <Key key={element.frequency} note={element}/>) : null}
         </div>
+      </div>
     );
   }
 }
