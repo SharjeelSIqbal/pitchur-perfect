@@ -101,10 +101,10 @@ export default class Pitch extends React.Component {
                 </ h1>
               </div>
               <div className="row justify-center-all">
-                <h3>{this.closestNoteFrequency ? `${this.closestNoteFrequency}Hz` : ''}</h3>
+                <h3 className="remove-start-margin">{this.closestNoteFrequency ? `Note Freq: ${this.closestNoteFrequency}Hz` : 'Note Freq:'}</h3>
               </div>
               <div className="col-100 row justify-center-all">
-                <p className="remove-start-margin" id="pitch">{this.state.currentFrequency ? `Current: ${this.state.currentFrequency}Hz` : 'Current: 0Hz'}</p>
+                <p className="remove-start-margin" id="pitch">{this.state.currentFrequency ? `Current Freq: ${this.state.currentFrequency}Hz` : 'Current Freq: 0Hz'}</p>
               </div>
               <div className="col-100 row justify-center-all">
                 <p className="remove-start-margin" id="clarity">{this.state.clarity ? `Voice Clarity: ${this.state.clarity}% ` : 'Voice Clarity: 0%'}</p>
