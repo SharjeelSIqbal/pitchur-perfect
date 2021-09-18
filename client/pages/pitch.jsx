@@ -2,24 +2,36 @@ import React from 'react';
 import { PitchDetector } from 'pitchy';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { abs } from 'mathjs';
 
 export default class Pitch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentFrequency: null,
-      isOn: false,
-      audioContext: null
+      notes: null,
+      isOn: false
     };
+    this.closestNote = null;
+    this.closestOctave = null;
+    this.closestNoteFrequency = null;
+    this.closestHit = false;
 
     this.updatePitch = this.updatePitch.bind(this);
     this.turnOnMic = this.turnOnMic.bind(this);
+    this.stopMic = this.stopMic.bind(this);
+  }
+
+  async componentDidMount() {
+    await fetch('/api/notes')
+      .then(response => response.json())
+      .then(result => this.setState({ notes: result }))
+      .catch(err => console.error(err));
   }
 
   async turnOnMic(e) {
     this.setState({ isOn: !this.state.isOn });
     const audioContext = new AudioContext();
-    this.setState({ audioContext });
     const analyserNode = audioContext.createAnalyser();
 
     this.mediaRecorder = await navigator.mediaDevices.getUserMedia({ audio: true })
@@ -32,34 +44,78 @@ export default class Pitch extends React.Component {
       });
   }
 
+  stopMic(e) {
+    this.setState({ isOn: false });
+  }
+
+  measureFrequency() {
+    let recordDifference = Infinity;
+    let diff = 0;
+    this.state.notes.forEach(element => {
+      diff = this.state.currentFrequency - element.frequency;
+      if (abs(diff) < abs(recordDifference)) {
+        this.closestNote = element.note;
+        this.closestOctave = element.octave;
+        this.closestNoteFrequency = element.frequency;
+        recordDifference = diff;
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   updatePitch(analyserNode, detector, input, sampleRate) {
+
+    analyserNode.getFloatTimeDomainData(input);
+    const [pitch, clarity] = detector.findPitch(input, sampleRate);
+
     if (this.state.isOn) {
-      analyserNode.getFloatTimeDomainData(input);
-      const [pitch, clarity] = detector.findPitch(input, sampleRate);
-      this.setState({
-        currentFrequency: Math.round(pitch * 10) / 10,
-        clarity: Math.round(clarity * 100)
-      });
-      setTimeout(
-        () => this.updatePitch(analyserNode, detector, input, sampleRate),
+      this.timeout = setTimeout(
+        () => {
+          this.setState({
+            currentFrequency: Math.round(pitch * 10) / 10,
+            clarity: Math.round(clarity * 100)
+          }, () => this.measureFrequency());
+          this.updatePitch(analyserNode, detector, input, sampleRate);
+        },
         100
       );
     }
   }
 
   render() {
+    const correct = this.closestHit ? 'correct' : null;
     return (
       <div>
         <Header />
-          <div className="col-100 row justify-center-all">
-           <button onClick={this.state.isOn ? null : this.turnOnMic}>Start singing!</button>
+          <div className="note-margin col-100 row justify-center-all">
+           <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
           </div>
-          <div className="col-100 row justify-center-all">
-            <h1 id="pitch">{this.state.currentFrequency ? `${this.state.currentFrequency}Hz` : 'Hz'}</h1>
+        <div className="row justify-center-all padding-input">
+          <div className="row justify-center-all background-pitch">
+          <div className="background-pitch-inner row justify-center-all font-pair">
+            <div>
+                <div className={`${correct} note-margin col-100 row justify-center-all`}>
+                <h1 className="note-size remove-start-margin" id="pitch">
+                  {`${this.closestNote ? this.closestNote : ''}`}
+                  <span className="octave">{this.closestOctave}</span>
+                </ h1>
+              </div>
+              <div className="row justify-center-all">
+                <h3>{this.closestNoteFrequency ? `${this.closestNoteFrequency}Hz` : ''}</h3>
+              </div>
+              <div className="col-100 row justify-center-all">
+                <p className="remove-start-margin" id="pitch">{this.state.currentFrequency ? `Current: ${this.state.currentFrequency}Hz` : 'Current: 0Hz'}</p>
+              </div>
+              <div className="col-100 row justify-center-all">
+                <p className="remove-start-margin" id="clarity">{this.state.clarity ? `Voice Clarity: ${this.state.clarity}% ` : 'Voice Clarity: 0%'}</p>
+              </div>
+            </div>
           </div>
-          <div className="col-100 row justify-center-all">
-            <h1 id="clarity">{this.state.clarity ? `${this.state.clarity}% ` : 'clarity'}</h1>
-          </div>
+        </div>
+        </div>
         <div>
           <Footer />
         </div>
