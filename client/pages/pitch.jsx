@@ -90,9 +90,6 @@ export default class Pitch extends React.Component {
     return (
       <div>
         <Header />
-          <div className="note-margin col-100 row justify-center-all">
-           <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
-          </div>
         <div className="row justify-center-all padding-input">
           <div className="row justify-center-all background-pitch">
           <div className="background-pitch-inner row justify-center-all font-pair">
@@ -115,6 +112,9 @@ export default class Pitch extends React.Component {
             </div>
           </div>
         </div>
+        </div>
+        <div className="note-margin col-100 row justify-center-all">
+          <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
         </div>
         <div>
           <Footer />
