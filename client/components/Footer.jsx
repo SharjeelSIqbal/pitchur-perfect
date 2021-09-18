@@ -4,9 +4,11 @@ export default function Footer(props) {
   return (
     <footer className={`mobile-only fixed background-color-white ${props.showFooter}`}>
       <div className="row justify-evenly col-100">
-        <svg width="30" height="30" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10.5 0V14.6528C9.4675 14.1806 8.2775 13.8889 7 13.8889C3.1325 13.8889 0 16.375 0 19.4444C0 22.5139 3.1325 25 7 25C10.8675 25 14 22.5139 14 19.4444V5.55556H21V0H10.5Z" fill="black" fillOpacity="0.54" />
-        </svg>
+        <a href="#pitch">
+          <svg width="30" height="30" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.5 0V14.6528C9.4675 14.1806 8.2775 13.8889 7 13.8889C3.1325 13.8889 0 16.375 0 19.4444C0 22.5139 3.1325 25 7 25C10.8675 25 14 22.5139 14 19.4444V5.55556H21V0H10.5Z" fill="black" fillOpacity="0.54" />
+          </svg>
+        </a>
         <a href="#">
         <svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="31" cy="31" r="31" fill="#C0CEFF" />

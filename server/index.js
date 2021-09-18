@@ -40,6 +40,17 @@ app.get('/api/recordings/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/notes', (req, res, next) => {
+  const sql = `
+  select *
+  from "notes"
+  order by "frequency" asc
+  `;
+  db.query(sql)
+    .then(result => res.status(200).json(result.rows))
+    .catch(err => next(err));
+
+});
 app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
   const { userId, title, recordingLength } = req.body;
   if (!userId || !title || !recordingLength) {

@@ -119,7 +119,7 @@ export default class Recordings extends React.Component {
     );
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
     return (
-      <form className="background-color" onSubmit={this.saveAudioToProfile} action="submit">
+      <form onSubmit={this.saveAudioToProfile} action="submit">
           <div className="row justify-center-all">
             {formInputs &&
             <div className="padding-input">
