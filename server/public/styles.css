@@ -220,7 +220,7 @@ audio::-webkit-media-controls-play-button {
 }
 
 .key {
-  background-color: white;
+  background-color: #f1ecec;
   height: 300px;
   width: 60px;
   border: 2px solid black;
@@ -244,7 +244,7 @@ audio::-webkit-media-controls-play-button {
 
 .flat {
   position: relative;
-  background-color: black;
+  background: conic-gradient(#626060 10%, #181818 10%);
   margin: 0 -17px;
   height: 200px;
   width: 30px;
