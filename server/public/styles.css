@@ -283,6 +283,10 @@ audio::-webkit-media-controls-play-button {
   box-shadow: 3px 1px 1px darkgray;
 }
 
+.pitch-buttons {
+  margin: 0 2rem;
+}
+
 @media only screen and (min-width: 762px) {
   .wrap-container {
     width: 45%;
