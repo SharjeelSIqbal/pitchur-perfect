@@ -10,7 +10,8 @@ export default class Pitch extends React.Component {
     this.state = {
       currentFrequency: null,
       notes: null,
-      isOn: false
+      isOn: false,
+      waves: null
     };
     this.closestNote = null;
     this.closestOctave = null;

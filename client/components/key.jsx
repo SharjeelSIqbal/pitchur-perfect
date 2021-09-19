@@ -14,7 +14,7 @@ export default class Keys extends React.Component {
     this.setState({ isPressed: true }, () => {
       const pressed = setTimeout(() => {
         this.setState({ isPressed: false }, () => clearTimeout(pressed));
-      }, 500);
+      }, 200);
     });
     const time = 1;
     const audioContext = new AudioContext();
@@ -36,7 +36,9 @@ export default class Keys extends React.Component {
     masterGain.gain.setValueAtTime(1, audioContext.currentTime);
     gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
     gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.1);
-    gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.4);
+    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.25);
+    gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.35);
+    gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + time);
     vibrato.start();
