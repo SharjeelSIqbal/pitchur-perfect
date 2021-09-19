@@ -226,6 +226,7 @@ audio::-webkit-media-controls-play-button {
   border: 1px solid black;
   position: relative;
   cursor: pointer;
+  transition: background-color 0.75s ease-in-out;
 }
 
 .no-border-left {
@@ -265,6 +266,11 @@ audio::-webkit-media-controls-play-button {
 .small-padding {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.pressed {
+  transition: background 0.75s ease-out;
+  background-color: #47c6fd;
 }
 
 @media only screen and (min-width: 762px) {
