@@ -119,7 +119,7 @@ export default class Pitch extends React.Component {
         <div>
           <Piano notes={this.state.notes} />
         </div>
-        <div className="small-padding">
+        <div className="footer-margin">
           <Footer />
         </div>
       </div>
