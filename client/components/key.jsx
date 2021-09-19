@@ -17,18 +17,25 @@ export default class Keys extends React.Component {
     const oscillator = audioContext.createOscillator();
     const masterGain = audioContext.createGain();
     const gainNode = audioContext.createGain();
+    const vibrato = audioContext.createOscillator();
+    const vibratoGain = audioContext.createGain();
 
+    vibrato.frequency.setValueAtTime(10, 5);
+    vibratoGain.gain.setValueAtTime(10, 4);
+    vibrato.connect(vibratoGain);
+    vibratoGain.connect(oscillator.frequency);
     oscillator.type = 'triangle';
     oscillator.frequency.value = this.props.note.frequency;
     oscillator.connect(gainNode);
     gainNode.connect(masterGain);
     masterGain.connect(audioContext.destination);
     masterGain.gain.setValueAtTime(1, audioContext.currentTime);
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
     gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.1);
-    gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + time);
+    gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.4);
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + time);
+    vibrato.start();
   }
 
   render() {

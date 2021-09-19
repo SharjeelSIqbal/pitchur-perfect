@@ -225,6 +225,7 @@ audio::-webkit-media-controls-play-button {
   width: 60px;
   border: 1px solid black;
   position: relative;
+  cursor: pointer;
 }
 
 .no-border-left {
