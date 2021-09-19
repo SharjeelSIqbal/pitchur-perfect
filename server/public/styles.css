@@ -226,7 +226,7 @@ audio::-webkit-media-controls-play-button {
   border: 1px solid black;
   position: relative;
   cursor: pointer;
-  transition: background-color 0.75s ease-in-out;
+  transition: all 0.25s ease-in-out;
   box-shadow: 7px 5px 5px gray;
 }
 
@@ -270,8 +270,9 @@ audio::-webkit-media-controls-play-button {
 }
 
 .pressed {
-  transition: background 0.75s ease-out;
+  transition: all 0.25s ease-out;
   background-color: #47c6fd;
+  box-shadow: 3px 1px 1px black;
 }
 
 @media only screen and (min-width: 762px) {
