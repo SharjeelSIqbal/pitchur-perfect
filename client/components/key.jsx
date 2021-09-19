@@ -5,16 +5,24 @@ export default class Keys extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPressed: false
+      isPressed: false,
+      currentKey: {}
+
     };
     this.playKey = this.playKey.bind(this);
   }
 
   playKey(e) {
-    this.setState({ isPressed: true }, () => {
+    const key = event.target.id.split(' ')[0];
+    const octave = event.target.id.split(' ')[1];
+    const frequency = event.target.getAttribute('name');
+    const currentKey = { key, octave, frequency };
+    this.setState({ isPressed: true, currentKey }, () => {
+
       const pressed = setTimeout(() => {
         this.setState({ isPressed: false }, () => clearTimeout(pressed));
       }, 200);
+
     });
     const time = 1;
     const audioContext = new AudioContext();
@@ -48,7 +56,7 @@ export default class Keys extends React.Component {
     const key = this.props.note.note.length === 1 ? 'key' : 'key flat';
     const perfectKeys = this.props.note.note === 'C' || this.props.note.note === 'F' ? 'no-border-left' : null;
     return (
-      <div className={`${key} ${perfectKeys} font-pair ${this.state.isPressed ? 'pressed' : null}` } name={this.props.note.frequency} id={`${this.props.note.note}${this.props.note.octave}`} onClick={this.playKey}>
+      <div className={`${key} ${perfectKeys} font-pair ${this.state.isPressed ? 'pressed' : null}` } name={this.props.note.frequency} id={`${this.props.note.note} ${this.props.note.octave}`} onClick={this.playKey}>
         <h3 className="absolute note-to-key ">{this.props.note.note.length === 1 ? `${this.props.note.note}${this.props.note.octave}` : null}</h3>
        </div>
 
