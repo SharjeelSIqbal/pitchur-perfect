@@ -5,6 +5,14 @@ button {
   cursor: pointer;
 }
 
+select {
+  height: 40px;
+  padding: 5px;
+  border: 0;
+  font-size: 16px;
+  width: 240px;
+}
+
 .gochi-hand {
   font-family: "Gochi Hand", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
