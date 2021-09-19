@@ -28,7 +28,7 @@ export default class Keys extends React.Component {
     vibratoGain.gain.setValueAtTime(10, 4);
     vibrato.connect(vibratoGain);
     vibratoGain.connect(oscillator.frequency);
-    oscillator.type = 'triangle';
+    oscillator.type = this.props.type;
     oscillator.frequency.value = this.props.note.frequency;
     oscillator.connect(gainNode);
     gainNode.connect(masterGain);
