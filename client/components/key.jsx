@@ -7,7 +7,6 @@ export default class Keys extends React.Component {
     this.state = {
       isPressed: false,
       currentKey: {}
-
     };
     this.playKey = this.playKey.bind(this);
   }

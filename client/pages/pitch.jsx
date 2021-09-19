@@ -3,7 +3,6 @@ import { PitchDetector } from 'pitchy';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Piano from '../components/piano';
-import AppContext from '../lib/app-context';
 
 export default class Pitch extends React.Component {
   constructor(props) {
@@ -144,5 +143,3 @@ export default class Pitch extends React.Component {
     );
   }
 }
-
-Pitch.contextType = AppContext;
