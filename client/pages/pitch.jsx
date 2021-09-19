@@ -75,8 +75,11 @@ export default class Pitch extends React.Component {
       if (this.state.currentKey) {
         this.closestNote = this.state.currentKey.note;
         this.closestOctave = this.state.currentKey.octave;
-        this.closestNoteFrequency = this.state.currentKey.frequency;
-        if (this.state.currentFrequency >= this.closestNoteFrequency - 5 && this.state.currentFrequency <= this.closestNoteFrequency + 5) {
+        this.closestNoteFrequency = parseFloat(this.state.currentKey.frequency);
+        // const note = this.state.notes.find(element => element.frequency === this.closestNoteFrequency);
+        // console.log(note);
+
+        if (this.state.currentFrequency >= this.closestNoteFrequency - 7 && this.state.currentFrequency <= this.closestNoteFrequency + 7) {
           this.setState({ isHitting: true });
         } else {
           this.setState({ isHitting: false });
