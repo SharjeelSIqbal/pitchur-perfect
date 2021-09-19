@@ -227,6 +227,7 @@ audio::-webkit-media-controls-play-button {
   position: relative;
   cursor: pointer;
   transition: background-color 0.75s ease-in-out;
+  box-shadow: 7px 5px 5px gray;
 }
 
 .no-border-left {
