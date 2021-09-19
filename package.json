@@ -5,12 +5,13 @@
   "description": "A full stack JavaScript solo project.",
   "main": "server/index.js",
   "scripts": {
+    "watch": "webpack --mode=development --watch",
     "build": "webpack --mode=production",
     "start": "node server/index.js",
-    "dev": "npm-run-all --silent --parallel dev:*",
     "dev:client": "webpack serve --mode=development",
     "dev:server": "nodemon server/index.js",
-    "db:import": "bash scripts/db-import.bash"
+    "db:import": "bash scripts/db-import.bash",
+    "dev": "npm-run-all --silent --parallel dev:*"
   },
   "husky": {
     "hooks": {

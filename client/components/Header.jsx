@@ -9,14 +9,14 @@ export default function Header() {
       <h1 className="title remove-start-margin">Pitchur Perfect</h1>
     </div>
     <div className=" col-100 row justify-center-all white-font font-pair">
-      <h3>Capture your perfect sound</h3>
+      <h3 className="remove-start-margin">Capture your perfect sound</h3>
     </div>
   </header>
 
   <nav className="desktop-only desktop-only-row">
   <div className="row nav-color">
     <div className="desktop-only-header gochi-hand white-font col-50 title-font-size">
-      <h1>Pitchur Perfect</h1>
+      <h1 className="remove-start-margin small-padding">Pitchur Perfect</h1>
     </div>
     <div className="row justify-evenly col-50">
       <a href="#pitch">

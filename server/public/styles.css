@@ -5,6 +5,14 @@ button {
   cursor: pointer;
 }
 
+select {
+  height: 40px;
+  padding: 5px;
+  border: 0;
+  font-size: 16px;
+  width: 240px;
+}
+
 .gochi-hand {
   font-family: "Gochi Hand", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -217,6 +225,62 @@ audio::-webkit-media-controls-play-button {
 
 .correct {
   color: green;
+}
+
+.key {
+  background-color: #f1ecec;
+  height: 300px;
+  width: 60px;
+  border: 1px solid black;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 5px 3px 3px gray;
+}
+
+.no-border-left {
+  border-left: none;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.note-to-key {
+  bottom: 0;
+  left: 0.6rem;
+}
+
+.piano {
+  display: flex;
+  overflow-x: scroll;
+  width: 3000px;
+}
+
+.flat {
+  position: relative;
+  background: conic-gradient(#626060 10%, #181818 10%);
+  margin: 0 -17px;
+  height: 200px;
+  width: 30px;
+  z-index: 2;
+}
+
+.piano-scroll {
+  overflow-x: scroll;
+  overflow-y: scroll;
+  max-width: 1500px;
+}
+
+.small-padding {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.pressed {
+  transition: all 0.25s ease-out;
+  background-color: #47c6fd;
+  box-shadow: 3px 1px 1px darkgray;
 }
 
 @media only screen and (min-width: 762px) {
