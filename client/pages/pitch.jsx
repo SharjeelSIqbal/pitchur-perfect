@@ -12,7 +12,8 @@ export default class Pitch extends React.Component {
       notes: null,
       isOn: false,
       currentKey: {},
-      tuneVoice: false
+      tuneVoice: false,
+      isHitting: false
     };
     this.closestNote = null;
     this.closestOctave = null;
@@ -22,6 +23,7 @@ export default class Pitch extends React.Component {
     this.updatePitch = this.updatePitch.bind(this);
     this.turnOnMic = this.turnOnMic.bind(this);
     this.stopMic = this.stopMic.bind(this);
+    this.currentPianoKey = this.currentPianoKey.bind(this);
   }
 
   async componentDidMount() {
@@ -47,7 +49,9 @@ export default class Pitch extends React.Component {
   }
 
   matchPiano(e) {
-    this.setState({ tuneVoice: !this.state.tuneVoice });
+    this.setState({ tuneVoice: !this.state.tuneVoice }, () => {
+      this.turnOnMic();
+    });
   }
 
   stopMic(e) {
@@ -72,8 +76,14 @@ export default class Pitch extends React.Component {
         this.closestNote = this.state.currentKey.note;
         this.closestOctave = this.state.currentKey.octave;
         this.closestNoteFrequency = this.state.currentKey.frequency;
+        if (this.state.currentFrequency >= this.closestNoteFrequency - 5 && this.state.currentFrequency <= this.closestNoteFrequency + 5) {
+          this.setState({ isHitting: true });
+        } else {
+          this.setState({ isHitting: false });
+        }
       }
     }
+
   }
 
   componentWillUnmount() {
@@ -99,8 +109,12 @@ export default class Pitch extends React.Component {
     }
   }
 
+  currentPianoKey(current) {
+    this.setState({ currentKey: current });
+  }
+
   render() {
-    const correct = this.closestHit ? 'correct' : null;
+    const correct = this.state.isHitting ? 'correct' : null;
     return (
       <div>
         <Header />
@@ -131,7 +145,7 @@ export default class Pitch extends React.Component {
           <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
         </div>
         <div>
-          <Piano notes={this.state.notes} />
+          <Piano callback={this.currentPianoKey} notes={this.state.notes} />
         </div>
         <div>
           <button onClick={this.matchPiano}>Start Tuning</button>
