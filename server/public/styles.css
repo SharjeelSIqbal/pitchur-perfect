@@ -223,8 +223,12 @@ audio::-webkit-media-controls-play-button {
   background-color: #f1ecec;
   height: 300px;
   width: 60px;
-  border: 2px solid black;
+  border: 1px solid black;
   position: relative;
+}
+
+.no-border-left {
+  border-left: none;
 }
 
 .absolute {
@@ -233,7 +237,7 @@ audio::-webkit-media-controls-play-button {
 
 .note-to-key {
   bottom: 0;
-  left: 1.2rem;
+  left: 0.6rem;
 }
 
 .piano {
@@ -255,6 +259,11 @@ audio::-webkit-media-controls-play-button {
   overflow-x: scroll;
   overflow-y: scroll;
   max-width: 1500px;
+}
+
+.small-padding {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 @media only screen and (min-width: 762px) {
