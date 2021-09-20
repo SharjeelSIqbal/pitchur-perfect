@@ -294,6 +294,10 @@ audio::-webkit-media-controls-play-button {
   margin: 0 2rem;
 }
 
+.favorite-trash {
+  padding: 1.25rem 0;
+}
+
 @media only screen and (min-width: 762px) {
   .wrap-container {
     width: 45%;

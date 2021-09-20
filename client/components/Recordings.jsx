@@ -111,6 +111,7 @@ export default class Recordings extends React.Component {
 
   render() {
     const { recordings, recording, formInputs } = this.state;
+    const paddingBottom = formInputs ? 'padding-record' : '';
     const recordInner = (
             <div className="outer-record-shell row justify-center-all">
               <div className="inner-record-shell">
@@ -119,7 +120,7 @@ export default class Recordings extends React.Component {
     );
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
     return (
-      <form onSubmit={this.saveAudioToProfile} action="submit">
+      <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color">
           <div className="row justify-center-all">
             {formInputs &&
             <div className="padding-input">
@@ -131,7 +132,7 @@ export default class Recordings extends React.Component {
           {!recording && <button onClick={e => this.startRecording(e)} className={recordButtonClassName}>{recordInner}</button>}
           {recording && <button onClick={e => this.stopRecording(e)} className={recordButtonClassName}>{recordInner}</button>}
         </div>
-        <div className="row justify-center-all padding-record">
+        <div className={`row justify-center-all ${paddingBottom}`}>
         {formInputs && (
               <audio controls="controls">
                 <source src={recordings} />
