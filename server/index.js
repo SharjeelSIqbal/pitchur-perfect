@@ -53,12 +53,9 @@ app.get('/api/notes', (req, res, next) => {
 
 app.delete('/api/recordings/:id', (req, res, next) => {
   const { id } = req.params;
-  if (!id) {
+  if (isNaN(id)) {
     throw new ClientError(400, 'bad request');
   }
-
-  // delete from "recordings"
-
   const params = [id];
   const sql = `
   delete from "recordings"
@@ -71,10 +68,11 @@ app.delete('/api/recordings/:id', (req, res, next) => {
         const filePath = path.join(__dirname, `/public${result.rows[0].url}`);
         fs.unlink(filePath, err => {
           if (err) {
-            console.error(err);
+            next(err);
+          } else {
+            res.status(204).json();
           }
         });
-        res.status(204).json();
       } else {
         throw new ClientError(404, 'Request not available');
       }

@@ -9,9 +9,8 @@ export default function RecordingView(props) {
 
   return (
     <>
-    {isDeleted
-      ? null
-      : <>
+    {!isDeleted &&
+     <>
       <div className={'view-container margin-0-auto font-pair wrap-container'}>
       <div className="col-100 margin-0-auto">
         <div className="recording-view-container" >
