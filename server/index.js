@@ -34,10 +34,6 @@ app.get('/api/recordings/:userId', (req, res, next) => {
   `;
   db.query(sql)
     .then(result => {
-
-      if (!result.rows[0]) {
-        throw new ClientError(404, 'userId not available');
-      }
       res.status(200).json(result.rows);
     })
     .catch(err => next(err));
