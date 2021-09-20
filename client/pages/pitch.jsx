@@ -11,16 +11,19 @@ export default class Pitch extends React.Component {
       currentFrequency: null,
       notes: null,
       isOn: false,
-      waves: null
+      currentKey: {},
+      tuneVoice: false,
+      isHitting: false
     };
     this.closestNote = null;
     this.closestOctave = null;
     this.closestNoteFrequency = null;
     this.closestHit = false;
-
+    this.matchPiano = this.matchPiano.bind(this);
     this.updatePitch = this.updatePitch.bind(this);
     this.turnOnMic = this.turnOnMic.bind(this);
     this.stopMic = this.stopMic.bind(this);
+    this.currentPianoKey = this.currentPianoKey.bind(this);
   }
 
   async componentDidMount() {
@@ -45,22 +48,42 @@ export default class Pitch extends React.Component {
       });
   }
 
+  matchPiano(e) {
+    this.setState({ tuneVoice: !this.state.tuneVoice }, () => {
+      this.turnOnMic();
+    });
+  }
+
   stopMic(e) {
     this.setState({ isOn: false });
   }
 
   measureFrequency() {
-    let recordDifference = Infinity;
-    let diff = 0;
-    this.state.notes.forEach(element => {
-      diff = this.state.currentFrequency - element.frequency;
-      if (Math.abs(diff) < Math.abs(recordDifference)) {
-        this.closestNote = element.note;
-        this.closestOctave = element.octave;
-        this.closestNoteFrequency = element.frequency;
-        recordDifference = diff;
+    if (!this.state.tuneVoice) {
+      let recordDifference = Infinity;
+      let diff = 0;
+      this.state.notes.forEach(element => {
+        diff = this.state.currentFrequency - element.frequency;
+        if (Math.abs(diff) < Math.abs(recordDifference)) {
+          this.closestNote = element.note;
+          this.closestOctave = element.octave;
+          this.closestNoteFrequency = element.frequency;
+          recordDifference = diff;
+        }
+      });
+    } else {
+      if (this.state.currentKey) {
+        this.closestNote = this.state.currentKey.note;
+        this.closestOctave = this.state.currentKey.octave;
+        this.closestNoteFrequency = parseFloat(this.state.currentKey.frequency);
+        if (this.state.currentFrequency >= this.closestNoteFrequency - 7 && this.state.currentFrequency <= this.closestNoteFrequency + 7) {
+          this.setState({ isHitting: true });
+        } else {
+          this.setState({ isHitting: false });
+        }
       }
-    });
+    }
+
   }
 
   componentWillUnmount() {
@@ -68,7 +91,6 @@ export default class Pitch extends React.Component {
   }
 
   updatePitch(analyserNode, detector, input, sampleRate) {
-
     analyserNode.getFloatTimeDomainData(input);
     const [pitch, clarity] = detector.findPitch(input, sampleRate);
 
@@ -78,7 +100,8 @@ export default class Pitch extends React.Component {
           this.setState({
             currentFrequency: Math.round(pitch * 10) / 10,
             clarity: Math.round(clarity * 100)
-          }, () => this.measureFrequency());
+          }, () =>
+            this.measureFrequency());
           this.updatePitch(analyserNode, detector, input, sampleRate);
         },
         100
@@ -86,8 +109,12 @@ export default class Pitch extends React.Component {
     }
   }
 
+  currentPianoKey(current) {
+    this.setState({ currentKey: current });
+  }
+
   render() {
-    const correct = this.closestHit ? 'correct' : null;
+    const correct = this.state.isHitting ? 'correct' : null;
     return (
       <div>
         <Header />
@@ -115,11 +142,17 @@ export default class Pitch extends React.Component {
         </div>
         </div>
         <div className="note-margin col-100 row justify-center-all">
-          <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
+          <div className="pitch-buttons">
+            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
+          </div>
+          <div className="pitch-buttons">
+            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.matchPiano}>Match!</button>
+          </div>
         </div>
         <div>
-          <Piano notes={this.state.notes} />
+          <Piano callback={this.currentPianoKey} notes={this.state.notes} />
         </div>
+
         <div className="footer-margin">
           <Footer />
         </div>
