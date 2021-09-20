@@ -161,7 +161,7 @@ select {
 .openAudio {
   overflow: scroll;
   transition: height 1s;
-  height: 75px;
+  height: 100px;
 }
 
 .closeAudio {
