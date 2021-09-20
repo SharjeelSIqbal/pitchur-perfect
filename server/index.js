@@ -85,10 +85,10 @@ app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'bad request');
   }
   const recordingUrl = `/voice/${req.file.filename}`;
-  const params = [userId, recordingUrl, title, recordingLength];
+  const params = [userId, recordingUrl, title, recordingLength, false];
   const sql = `
-  insert into "recordings" ("userId", "url", "title", "recordingLength")
-  values ($1, $2, $3, $4)
+  insert into "recordings" ("userId", "url", "title", "recordingLength", "favorite")
+  values ($1, $2, $3, $4, $5)
   returning *`;
   db.query(sql, params)
     .then(result => {
@@ -97,6 +97,13 @@ app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+// app.post('/api/recordings/:id', (req, res, next) => {
+//   const { id } = req.params;
+//   if(isNaN(id)){
+//     throw new ClientError(400, 'bad request');
+//   }
+// })
 
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
