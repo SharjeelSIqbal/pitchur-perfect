@@ -36,7 +36,7 @@ export default class App extends React.Component {
     return (
     <>
 
-    <div className="background-color">
+    <div className="container-background-color">
 
     {this.renderPage()}
     </div>

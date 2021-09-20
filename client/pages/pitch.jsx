@@ -153,8 +153,7 @@ export default class Pitch extends React.Component {
         <div>
           <Piano callback={this.currentPianoKey} notes={this.state.notes} />
         </div>
-
-        <div className="footer-margin">
+        <div className="mobile-only footer-margin">
           <Footer />
         </div>
       </div>
