@@ -11,7 +11,8 @@ export default function RecordingView(props) {
     <>
     {isDeleted
       ? null
-      : <div className="view-container margin-0-auto font-pair wrap-container">
+      : <>
+      <div className={'view-container margin-0-auto font-pair wrap-container'}>
       <div className="col-100 margin-0-auto">
         <div className="recording-view-container" >
           <div onClick={() => setChosen(!chosen)}>
@@ -42,6 +43,7 @@ export default function RecordingView(props) {
         </div>
       </div>
     </div>
+    </>
 }
     </>
   );

@@ -7,13 +7,12 @@ export default class UserView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recordings: null
+      recordings: []
     };
     this.deleteRecording = this.deleteRecording.bind(this);
   }
 
   deleteRecording(id) {
-    event.preventDefault();
     fetch(`/api/recordings/${id}`, {
       method: 'DELETE'
     })
@@ -32,16 +31,15 @@ export default class UserView extends React.Component {
   render() {
     return (
       <>
+
         <div className="background-color">
           <Header />
           <div className="row wrap margin-0-auto">
-            { this.state.recordings
-              ? this.state.recordings.map(element => {
-                return (
+            { this.state.recordings.map(element => {
+              return (
                   <ViewRecording deleteView={this.deleteRecording} key={element.url} recording={element} />
-                );
-              })
-              : null
+              );
+            })
             }
           </div>
         </div>

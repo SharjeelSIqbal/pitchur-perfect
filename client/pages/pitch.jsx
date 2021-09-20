@@ -34,6 +34,7 @@ export default class Pitch extends React.Component {
   }
 
   async turnOnMic(e) {
+
     this.setState({ isOn: !this.state.isOn });
     const audioContext = new AudioContext();
     const analyserNode = audioContext.createAnalyser();
@@ -71,7 +72,7 @@ export default class Pitch extends React.Component {
           recordDifference = diff;
         }
       });
-    } else {
+    } if (this.state.isOn && this.state.tuneVoice) {
       if (this.state.currentKey) {
         this.closestNote = this.state.currentKey.note;
         this.closestOctave = this.state.currentKey.octave;
@@ -143,7 +144,7 @@ export default class Pitch extends React.Component {
         </div>
         <div className="note-margin col-100 row justify-center-all">
           <div className="pitch-buttons">
-            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>SING!</button>
+            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn && !this.state.tuneVoice ? this.stopMic : this.turnOnMic}>SING!</button>
           </div>
           <div className="pitch-buttons">
             <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.matchPiano}>Match!</button>
