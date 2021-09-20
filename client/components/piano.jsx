@@ -30,7 +30,7 @@ export default class Piano extends React.Component {
       </div>
       <div className="piano-scroll">
         <div className="piano small-padding">
-            {this.props.notes ? this.props.notes.map(element => <Key key={element.frequency} setKey={this.props.callback} type={this.state.currentType} note={element}/>) : null}
+            {this.props.notes && this.props.notes.map(element => <Key key={element.frequency} setKey={this.props.callback} type={this.state.currentType} note={element}/>)}
         </div>
       </div>
       </>
