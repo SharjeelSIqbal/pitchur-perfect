@@ -1,8 +1,11 @@
 require('dotenv/config');
 const express = require('express');
 const pg = require('pg');
+const fs = require('fs');
+const path = require('path');
 const ClientError = require('./client-error');
 const uploadRecordingsMiddleware = require('./recordings-middleware');
+
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -31,10 +34,6 @@ app.get('/api/recordings/:userId', (req, res, next) => {
   `;
   db.query(sql)
     .then(result => {
-
-      if (!result.rows[0]) {
-        throw new ClientError(404, 'userId not available');
-      }
       res.status(200).json(result.rows);
     })
     .catch(err => next(err));
@@ -50,6 +49,35 @@ app.get('/api/notes', (req, res, next) => {
     .then(result => res.status(200).json(result.rows))
     .catch(err => next(err));
 
+});
+
+app.delete('/api/recordings/:id', (req, res, next) => {
+  const { id } = req.params;
+  if (isNaN(id)) {
+    throw new ClientError(400, 'bad request');
+  }
+  const params = [id];
+  const sql = `
+  delete from "recordings"
+  where "recordingId" = $1
+  returning *
+  `;
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows[0]) {
+        const filePath = path.join(__dirname, `/public${result.rows[0].url}`);
+        fs.unlink(filePath, err => {
+          if (err) {
+            next(err);
+          } else {
+            res.status(204).json();
+          }
+        });
+      } else {
+        throw new ClientError(404, 'Request not available');
+      }
+    })
+    .catch(err => next(err));
 });
 app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
   const { userId, title, recordingLength } = req.body;

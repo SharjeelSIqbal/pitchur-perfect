@@ -7,35 +7,44 @@ export default class UserView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openAudio: false,
       recordings: []
     };
+    this.deleteRecording = this.deleteRecording.bind(this);
+  }
+
+  deleteRecording(id) {
+    fetch(`/api/recordings/${id}`, {
+      method: 'DELETE'
+    })
+      .catch(err => console.error(err));
   }
 
   componentDidMount() {
     fetch(`/api/recordings/${1}`)
       .then(response => response.json())
-      .then(recordings => this.setState({ recordings }))
+      .then(recordings => {
+        this.setState({ recordings });
+      })
       .catch(err => console.error(err));
   }
 
   render() {
     return (
       <>
+
         <div className="background-color">
           <Header />
           <div className="row wrap margin-0-auto">
-          {
-            this.state.recordings.map(element => {
+            { this.state.recordings.map(element => {
               return (
-                <ViewRecording key={element.url} recording={element} />
+                  <ViewRecording deleteView={this.deleteRecording} key={element.url} recording={element} />
               );
             })
-          }
+            }
           </div>
         </div>
         <div className="mobile-only footer-margin">
-          <Footer showFooter="hide"/>
+          <Footer showFooter="hide" />
         </div>
       </>
     );
