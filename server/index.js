@@ -98,12 +98,23 @@ app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
     .catch(err => next(err));
 });
 
-// app.post('/api/recordings/:id', (req, res, next) => {
-//   const { id } = req.params;
-//   if(isNaN(id)){
-//     throw new ClientError(400, 'bad request');
-//   }
-// })
+app.patch('/api/recordings/:recordingId', (req, res, next) => {
+  const { recordingId } = req.params;
+  const { isFavorite } = req.body;
+  if (isNaN(recordingId)) {
+    throw new ClientError(400, 'bad request');
+  }
+  const params = [isFavorite, recordingId];
+  const sql = `
+  update "recordings"
+  set "favorite" = $1
+  where "recordingId" = $2
+  returning *
+  `;
+  db.query(sql, params)
+    .then(result => res.status(200).json(result.rows))
+    .catch(err => next(err));
+});
 
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
