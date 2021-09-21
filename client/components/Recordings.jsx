@@ -19,7 +19,6 @@ export default class Recordings extends React.Component {
 
   async componentDidMount() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
     this.mediaRecorder = new MediaRecorder(stream, {
       mimeType: 'audio/webm'
     });
@@ -102,11 +101,6 @@ export default class Recordings extends React.Component {
   discardAudio(e) {
     e.preventDefault();
     this.setState({ recordings: [], title: '', formInputs: false });
-  }
-
-  deleteAudio(audioUrl) {
-    const recordings = this.state.recordings.filter(audio => audio !== audioUrl);
-    this.setState({ recordings });
   }
 
   render() {
