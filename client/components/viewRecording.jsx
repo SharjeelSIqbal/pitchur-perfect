@@ -38,9 +38,9 @@ export default function RecordingView(props) {
                 </svg>
               </a>
 
-              <a onClick={e => {
+              <a onClick={ e => {
                 setFavorited(!isFavorited);
-
+                props.favoriteRecording(props.recording.recordingId, JSON.stringify({ isFavorite: !isFavorited }));
               }
               }>
               {isFavorited

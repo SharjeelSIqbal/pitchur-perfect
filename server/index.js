@@ -101,7 +101,7 @@ app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
 app.patch('/api/recordings/:recordingId', (req, res, next) => {
   const { recordingId } = req.params;
   const { isFavorite } = req.body;
-  if (isNaN(recordingId)) {
+  if (isNaN(recordingId) || typeof isFavorite !== 'boolean') {
     throw new ClientError(400, 'bad request');
   }
   const params = [isFavorite, recordingId];
@@ -112,7 +112,7 @@ app.patch('/api/recordings/:recordingId', (req, res, next) => {
   returning *
   `;
   db.query(sql, params)
-    .then(result => res.status(200).json(result.rows))
+    .then(result => res.status(200).json(result.rows[0]))
     .catch(err => next(err));
 });
 
