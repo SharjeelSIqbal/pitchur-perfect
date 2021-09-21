@@ -276,7 +276,7 @@ audio::-webkit-media-controls-play-button {
 .piano-scroll {
   overflow-x: scroll;
   overflow-y: scroll;
-  max-width: 1500px;
+  max-width: 3000px;
 }
 
 .small-padding {
