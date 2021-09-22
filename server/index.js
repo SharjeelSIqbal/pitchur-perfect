@@ -85,16 +85,34 @@ app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'bad request');
   }
   const recordingUrl = `/voice/${req.file.filename}`;
-  const params = [userId, recordingUrl, title, recordingLength];
+  const params = [userId, recordingUrl, title, recordingLength, false];
   const sql = `
-  insert into "recordings" ("userId", "url", "title", "recordingLength")
-  values ($1, $2, $3, $4)
+  insert into "recordings" ("userId", "url", "title", "recordingLength", "favorite")
+  values ($1, $2, $3, $4, $5)
   returning *`;
   db.query(sql, params)
     .then(result => {
       const recording = result.rows;
       res.status(201).json(recording);
     })
+    .catch(err => next(err));
+});
+
+app.patch('/api/recordings/:recordingId', (req, res, next) => {
+  const { recordingId } = req.params;
+  const { isFavorite } = req.body;
+  if (isNaN(recordingId) || typeof isFavorite !== 'boolean') {
+    throw new ClientError(400, 'bad request');
+  }
+  const params = [isFavorite, recordingId];
+  const sql = `
+  update "recordings"
+  set "favorite" = $1
+  where "recordingId" = $2
+  returning *
+  `;
+  db.query(sql, params)
+    .then(result => res.status(200).json(result.rows[0]))
     .catch(err => next(err));
 });
 

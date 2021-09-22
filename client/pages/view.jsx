@@ -10,6 +10,7 @@ export default class UserView extends React.Component {
       recordings: []
     };
     this.deleteRecording = this.deleteRecording.bind(this);
+    this.favoriteRecording = this.favoriteRecording.bind(this);
   }
 
   deleteRecording(id) {
@@ -28,6 +29,16 @@ export default class UserView extends React.Component {
       .catch(err => console.error(err));
   }
 
+  favoriteRecording(recordingId, favorite) {
+    fetch(`/api/recordings/${recordingId}`, {
+      method: 'PATCH',
+      body: favorite,
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(response => response.json())
+      .catch(err => console.error(err));
+  }
+
   render() {
     return (
       <>
@@ -37,7 +48,7 @@ export default class UserView extends React.Component {
           <div className="row wrap margin-0-auto">
             { this.state.recordings.map(element => {
               return (
-                  <ViewRecording deleteView={this.deleteRecording} key={element.url} recording={element} />
+                  <ViewRecording favoriteRecording={this.favoriteRecording} deleteView={this.deleteRecording} key={element.url} recording={element} />
               );
             })
             }
