@@ -1,10 +1,19 @@
 require('dotenv/config');
 const express = require('express');
 const pg = require('pg');
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 const ClientError = require('./client-error');
 const uploadRecordingsMiddleware = require('./recordings-middleware');
+// const aws = require('aws-sdk');
+const S3 = require('aws-sdk/clients/s3');
+
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  Bucket: process.env.AWS_S3_BUCKET
+});
+const Bucket = process.env.AWS_S3_BUCKET;
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -65,14 +74,23 @@ app.delete('/api/recordings/:id', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       if (result.rows[0]) {
-        const filePath = path.join(__dirname, `/public${result.rows[0].url}`);
-        fs.unlink(filePath, err => {
-          if (err) {
-            next(err);
-          } else {
-            res.status(204).json();
-          }
-        });
+        let deleteKey = result.rows[0].url.split('/');
+        deleteKey = deleteKey[deleteKey.length - 1];
+        const s3Params = {
+          Bucket,
+          Key: deleteKey
+        };
+        s3.deleteObject(s3Params).promise();
+
+        // For file uploads onto your computer
+        // const filePath = path.join(__dirname, `/public${result.rows[0].url}`);
+        // fs.unlink(filePath, err => {
+        //   if (err) {
+        //     next(err);
+        //   } else {
+        //     res.status(204).json();
+        //   }
+        // });
       } else {
         throw new ClientError(404, 'Request not available');
       }

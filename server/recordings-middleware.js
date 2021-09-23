@@ -7,7 +7,6 @@ const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
-// const voicesDirectory = path.join(__dirname, 'public/voice');
 
 const storage = multerS3({
   s3: s3,
@@ -27,6 +26,8 @@ const uploadsMiddleware = multer({
   storage
 }).single('audio');
 
+// For Teseting purposes for others
+// const voicesDirectory = path.join(__dirname, 'public/voice');
 // const storage = multer.diskStorage({
 //   destination(req, file, callback) {
 //     callback(null, voicesDirectory);
