@@ -1,24 +1,27 @@
 require('dotenv/config');
 const express = require('express');
 const pg = require('pg');
-const fs = require('fs');
-const path = require('path');
 const ClientError = require('./client-error');
 const uploadRecordingsMiddleware = require('./recordings-middleware');
-
+const S3 = require('aws-sdk/clients/s3');
+const errorMiddleware = require('./error-middleware');
+const staticMiddleware = require('./static-middleware');
+const Bucket = process.env.AWS_S3_BUCKET;
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  Bucket: process.env.AWS_S3_BUCKET
+});
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
 });
-const errorMiddleware = require('./error-middleware');
-const staticMiddleware = require('./static-middleware');
 
 const app = express();
 
 app.use(staticMiddleware);
-
 app.use(express.json());
 
 app.get('/api/recordings/:userId', (req, res, next) => {
@@ -65,26 +68,27 @@ app.delete('/api/recordings/:id', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       if (result.rows[0]) {
-        const filePath = path.join(__dirname, `/public${result.rows[0].url}`);
-        fs.unlink(filePath, err => {
-          if (err) {
-            next(err);
-          } else {
-            res.status(204).json();
-          }
-        });
+        let deleteKey = result.rows[0].url.split('/');
+        deleteKey = deleteKey[deleteKey.length - 1];
+        const s3Params = {
+          Bucket,
+          Key: deleteKey
+        };
+        s3.deleteObject(s3Params).promise();
+        res.status(204).json();
       } else {
         throw new ClientError(404, 'Request not available');
       }
     })
     .catch(err => next(err));
 });
+
 app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
   const { userId, title, recordingLength } = req.body;
   if (!userId || !title || !recordingLength) {
     throw new ClientError(400, 'bad request');
   }
-  const recordingUrl = `/voice/${req.file.filename}`;
+  const recordingUrl = req.file.location;
   const params = [userId, recordingUrl, title, recordingLength, false];
   const sql = `
   insert into "recordings" ("userId", "url", "title", "recordingLength", "favorite")
