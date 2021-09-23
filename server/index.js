@@ -84,7 +84,7 @@ app.post('/api/recordings', uploadRecordingsMiddleware, (req, res, next) => {
   if (!userId || !title || !recordingLength) {
     throw new ClientError(400, 'bad request');
   }
-  const recordingUrl = `/voice/${req.file.filename}`;
+  const recordingUrl = req.file.location;
   const params = [userId, recordingUrl, title, recordingLength, false];
   const sql = `
   insert into "recordings" ("userId", "url", "title", "recordingLength", "favorite")
