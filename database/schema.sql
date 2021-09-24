@@ -39,6 +39,14 @@ CREATE TABLE "public"."favorite" (
   OIDS=FALSE
 );
 
+CREATE TABLE "public"."notes" (
+	"note" TEXT NOT NULL,
+	"frequency" numeric NOT NULL,
+	"octave" integer NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
 
 
 
