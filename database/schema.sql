@@ -4,12 +4,11 @@ set client_min_messages to warning;
 -- `drop schema` INSTANTLY ERASES EVERYTHING.
 drop schema "public" cascade;
 
-create schema "public";
 CREATE TABLE "public"."users" (
 	"userId" serial NOT NULL,
 	"username" TEXT NOT NULL,
 	"hashPassword" TEXT NOT NULL,
-	"createdAt" timestamptz NOT NULL DEFAULT NOW(),
+	"createdAt" timestamptz NOT NULL,
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
@@ -20,10 +19,11 @@ CREATE TABLE "public"."users" (
 CREATE TABLE "public"."recordings" (
 	"recordingId" serial NOT NULL,
 	"userId" int NOT NULL,
+	"recordedAt" timestamptz NOT NULL,
 	"url" TEXT NOT NULL,
 	"title" TEXT NOT NULL,
 	"recordingLength" TEXT NOT NULL,
-	"recordedAt" timestamptz NOT NULL DEFAULT NOW(),
+	"favorite" BOOLEAN NOT NULL,
 	CONSTRAINT "recordings_pk" PRIMARY KEY ("recordingId")
 ) WITH (
   OIDS=FALSE
@@ -34,7 +34,7 @@ CREATE TABLE "public"."recordings" (
 CREATE TABLE "public"."favorite" (
 	"userId" int NOT NULL,
 	"recordingId" int NOT NULL,
-	"favoritedAt" timestamptz NOT NULL DEFAULT NOW()
+	"favoritedAt" timestamptz NOT NULL
 ) WITH (
   OIDS=FALSE
 );
