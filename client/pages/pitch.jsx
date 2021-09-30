@@ -13,7 +13,8 @@ export default class Pitch extends React.Component {
       isOn: false,
       currentKey: {},
       tuneVoice: false,
-      isHitting: false
+      isHitting: false,
+      loading: true
     };
     this.closestNote = null;
     this.closestOctave = null;
@@ -29,7 +30,7 @@ export default class Pitch extends React.Component {
   async componentDidMount() {
     await fetch('/api/notes')
       .then(response => response.json())
-      .then(result => this.setState({ notes: result }))
+      .then(result => this.setState({ notes: result, loading: false }))
       .catch(err => console.error(err));
   }
 
@@ -119,6 +120,11 @@ export default class Pitch extends React.Component {
     return (
       <div>
         <Header />
+        {this.state.loading &&
+          <div className="row justify-center-all padding-input">
+            <div className="lds-facebook loading"><div></div><div></div><div></div></div>
+          </div>
+        }
         <div className="row justify-center-all padding-input">
           <div className="row justify-center-all background-pitch">
           <div className="background-pitch-inner row justify-center-all font-pair">

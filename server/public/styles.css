@@ -1,5 +1,6 @@
 .pointer,
 .title,
+select,
 svg,
 button {
   cursor: pointer;
@@ -11,6 +12,11 @@ select {
   border: 0;
   font-size: 16px;
   width: 240px;
+}
+
+.no-recordings {
+  color: white;
+  font-size: 1rem;
 }
 
 .gochi-hand {
@@ -120,6 +126,10 @@ select {
 
 .padding-input {
   margin: 2rem;
+}
+
+.text-align-center {
+  text-align: center;
 }
 
 .title-input {
@@ -308,7 +318,18 @@ audio::-webkit-media-controls-play-button {
   box-shadow: 3px 1px 1px darkgray;
 }
 
+@media only screen and (max-width: 366px) {
+  h1 {
+    font-size: 1.5em;
+  }
+}
+
 @media only screen and (min-width: 762px) {
+  .no-recordings {
+    color: black;
+    font-size: 2.5rem;
+  }
+
   .wrap-container {
     width: 45%;
   }

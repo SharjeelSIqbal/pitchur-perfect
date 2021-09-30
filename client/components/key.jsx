@@ -55,9 +55,9 @@ export default class Keys extends React.Component {
     const key = this.props.note.note.length === 1 ? 'key' : 'key flat';
     const perfectKeys = this.props.note.note === 'C' || this.props.note.note === 'F' ? 'no-border-left' : null;
     return (
-      <div className={`${key} ${perfectKeys} font-pair ${this.state.isPressed ? 'pressed' : null}` } name={this.props.note.frequency} id={`${this.props.note.note} ${this.props.note.octave}`} onClick={this.playKey}>
+      <button className={`${key} ${perfectKeys} font-pair ${this.state.isPressed ? 'pressed' : null}` } name={this.props.note.frequency} id={`${this.props.note.note} ${this.props.note.octave}`} onClick={this.playKey}>
         <h3 className="absolute note-to-key ">{this.props.note.note.length === 1 ? `${this.props.note.note}${this.props.note.octave}` : null}</h3>
-       </div>
+       </button>
 
     );
   }

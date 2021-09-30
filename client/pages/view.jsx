@@ -7,6 +7,7 @@ export default class UserView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       recordings: []
     };
     this.deleteRecording = this.deleteRecording.bind(this);
@@ -23,9 +24,7 @@ export default class UserView extends React.Component {
   componentDidMount() {
     fetch(`/api/recordings/${1}`)
       .then(response => response.json())
-      .then(recordings => {
-        this.setState({ recordings });
-      })
+      .then(recordings => this.setState({ recordings, loading: false }))
       .catch(err => console.error(err));
   }
 
@@ -45,6 +44,12 @@ export default class UserView extends React.Component {
 
         <div className="background-color">
           <Header />
+          {this.state.loading &&
+            <div className="row justify-center-all padding-input">
+              <div className="lds-facebook loading"><div></div><div></div><div></div></div>
+            </div>
+          }
+          {this.state.recordings.length === 0 && this.state.loading === false && <h2 className="font-pair text-align-center no-recordings">No recordings found, please make a new recording.</h2>}
           <div className="row wrap margin-0-auto">
             { this.state.recordings.map(element => {
               return (

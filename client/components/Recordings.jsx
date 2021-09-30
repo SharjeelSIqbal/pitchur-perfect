@@ -78,6 +78,7 @@ export default class Recordings extends React.Component {
   }
 
   saveAudioToProfile(e) {
+
     e.preventDefault();
     const formData = new FormData();
     const userId = 1;
