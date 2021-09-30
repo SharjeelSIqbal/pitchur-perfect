@@ -7,6 +7,7 @@ export default class UserView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      failed: false,
       loading: true,
       recordings: []
     };
@@ -15,17 +16,27 @@ export default class UserView extends React.Component {
   }
 
   deleteRecording(id) {
+    let recordings = this.state.recordings;
+    this.setState({ failed: false });
     fetch(`/api/recordings/${id}`, {
       method: 'DELETE'
     })
-      .catch(err => console.error(err));
+      .catch(err => {
+        this.setState({ failed: true });
+        return console.error(err);
+      });
+    recordings = recordings.filter(element => element.recordingId !== id);
+    this.setState({ recordings });
   }
 
   componentDidMount() {
     fetch(`/api/recordings/${1}`)
       .then(response => response.json())
       .then(recordings => this.setState({ recordings, loading: false }))
-      .catch(err => console.error(err));
+      .catch(err => {
+        this.setState({ failed: true, loading: false });
+        console.error(err);
+      });
   }
 
   favoriteRecording(recordingId, favorite) {
@@ -34,8 +45,14 @@ export default class UserView extends React.Component {
       body: favorite,
       headers: { 'Content-Type': 'application/json' }
     })
-      .then(response => response.json())
-      .catch(err => console.error(err));
+      .then(response => {
+        this.setState({ failed: false });
+        return response.json();
+      })
+      .catch(err => {
+        this.setState({ failed: true });
+        console.error(err);
+      });
   }
 
   render() {
@@ -49,7 +66,8 @@ export default class UserView extends React.Component {
               <div className="lds-facebook loading"><div></div><div></div><div></div></div>
             </div>
           }
-          {this.state.recordings.length === 0 && this.state.loading === false && <h2 className="font-pair text-align-center no-recordings">No recordings found, please make a new recording.</h2>}
+          {this.state.recordings.length === 0 && !this.state.failed && this.state.loading === false && <h2 className="font-pair text-align-center no-recordings">No recordings found, please make a new recording.</h2>}
+          {this.state.failed && <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2>}
           <div className="row wrap margin-0-auto">
             { this.state.recordings.map(element => {
               return (

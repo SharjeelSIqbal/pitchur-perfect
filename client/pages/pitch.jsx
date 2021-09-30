@@ -14,7 +14,8 @@ export default class Pitch extends React.Component {
       currentKey: {},
       tuneVoice: false,
       isHitting: false,
-      loading: true
+      loading: true,
+      failed: false
     };
     this.closestNote = null;
     this.closestOctave = null;
@@ -30,8 +31,11 @@ export default class Pitch extends React.Component {
   async componentDidMount() {
     await fetch('/api/notes')
       .then(response => response.json())
-      .then(result => this.setState({ notes: result, loading: false }))
-      .catch(err => console.error(err));
+      .then(result => this.setState({ failed: false, notes: result, loading: false }))
+      .catch(err => {
+        this.setState({ failed: true, loading: false });
+        return console.error(err);
+      });
   }
 
   async turnOnMic(e) {
@@ -125,6 +129,9 @@ export default class Pitch extends React.Component {
             <div className="lds-facebook loading"><div></div><div></div><div></div></div>
           </div>
         }
+        { this.state.failed && <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2> }
+        {!this.state.failed &&
+        <>
         <div className="row justify-center-all padding-input">
           <div className="row justify-center-all background-pitch">
           <div className="background-pitch-inner row justify-center-all font-pair">
@@ -159,8 +166,10 @@ export default class Pitch extends React.Component {
         <div>
           <Piano callback={this.currentPianoKey} notes={this.state.notes} />
         </div>
-        <div className="mobile-only footer-margin">
+        </>
+        }
           <Footer />
+        <div className="mobile-only footer-margin">
         </div>
       </div>
     );

@@ -36,12 +36,14 @@ export default class Recordings extends React.Component {
 
   startRecording(e) {
     e.preventDefault();
-    this.setState({ recordings: null });
-    this.chunks = [];
-    this.mediaRecorder.start(10);
-    this.setState({ recording: true, formInputs: false, duration: 0 }, () => {
-      this.startTime = Date.now();
-    });
+    if (!this.state.formInputs) {
+      this.setState({ recordings: null });
+      this.chunks = [];
+      this.mediaRecorder.start(10);
+      this.setState({ recording: true, duration: 0 }, () => {
+        this.startTime = Date.now();
+      });
+    }
   }
 
   stopRecording(e) {
@@ -96,7 +98,10 @@ export default class Recordings extends React.Component {
         response.json();
         this.setState({ formInputs: false, recordings: [] });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        this.setState({ failed: true });
+        console.error(err);
+      });
   }
 
   discardAudio(e) {
@@ -117,6 +122,9 @@ export default class Recordings extends React.Component {
 
     return (
       <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color">
+        {this.state.failed
+          ? <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2>
+          : <>
           <div className="row justify-center-all">
             {formInputs &&
             <div className="padding-input">
@@ -133,13 +141,13 @@ export default class Recordings extends React.Component {
         </div>
         <div className={`row justify-center-all ${paddingBottom}`}>
         {formInputs && (
-              <audio controls="controls">
+          <audio controls="controls">
                 <source src={recordings} />
               </audio>
         )}
         </div>
         {formInputs && (
-        <div className="button-container margin-0-auto">
+          <div className="button-container margin-0-auto">
           <div className="padding-button-bottom col-100 row justify-evenly">
             <div className="row justify-center-all col-50">
               <button className="button discard-button" onClick={this.discardAudio}>
@@ -153,8 +161,9 @@ export default class Recordings extends React.Component {
             </div>
           </div>
         </div>)}
+        </>
+      }
       </form>
-
     );
   }
 }
