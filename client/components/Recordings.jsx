@@ -15,7 +15,6 @@ export default class Recordings extends React.Component {
     this.saveAudioToProfile = this.saveAudioToProfile.bind(this);
     this.discardAudio = this.discardAudio.bind(this);
     this.titleName = this.titleName.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   async componentDidMount() {
