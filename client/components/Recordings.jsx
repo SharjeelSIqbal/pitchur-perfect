@@ -8,7 +8,8 @@ export default class Recordings extends React.Component {
       recordings: [],
       formInputs: false,
       title: '',
-      duration: 0
+      duration: 0,
+      loading: false
     };
     this.captureAudio = this.captureAudio.bind(this);
     this.startRecording = this.startRecording.bind(this);
@@ -82,7 +83,7 @@ export default class Recordings extends React.Component {
 
   saveAudioToProfile(e) {
     e.preventDefault();
-    this.setState({ sent: true });
+    this.setState({ sent: true, loading: true });
     const formData = new FormData();
     const userId = 1;
     const title = this.state.title;
@@ -97,10 +98,10 @@ export default class Recordings extends React.Component {
     })
       .then(response => {
         response.json();
-        this.setState({ formInputs: false, recordings: [], sent: false });
+        this.setState({ formInputs: false, recordings: [], sent: false, loading: false });
       })
       .catch(err => {
-        this.setState({ failed: true, sent: false });
+        this.setState({ failed: true, sent: false, loading: false });
         console.error(err);
       });
   }
@@ -122,13 +123,19 @@ export default class Recordings extends React.Component {
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
 
     return (
-
+      <>
+      {this.state.loading &&
+        <div className="row justify-center-all padding-input absolute-loading">
+          <div className="lds-facebook loading"><div></div><div></div><div></div></div>
+        </div>
+      }
+      {!this.state.loading &&
       <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color"
-        onKeyUp={e => {
-          if (e.key === 'Enter' && !this.state.sent) {
-            this.saveAudioToProfile(e);
-          }
-        }}>
+      onKeyUp={e => {
+        if (e.key === 'Enter' && !this.state.loading) {
+          this.saveAudioToProfile(e);
+        }
+      }}>
         {this.state.failed
           ? <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2>
           : <>
@@ -171,6 +178,8 @@ export default class Recordings extends React.Component {
         </>
       }
       </form>
+      }
+      </>
     );
   }
 }

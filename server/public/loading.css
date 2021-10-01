@@ -24,6 +24,14 @@
   animation-delay: -0.12s;
 }
 
+.absolute-loading {
+  position: absolute;
+  position: 25%;
+  left: 25%;
+  bottom: 25%;
+  right: 25%;
+}
+
 .lds-facebook div:nth-child(3) {
   left: 56px;
   animation-delay: 0;

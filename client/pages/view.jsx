@@ -62,7 +62,7 @@ export default class UserView extends React.Component {
         <div className="background-color">
           <Header />
           {this.state.loading &&
-            <div className="row justify-center-all padding-input">
+            <div className="row justify-center-all padding-input absolute-loading">
               <div className="lds-facebook loading"><div></div><div></div><div></div></div>
             </div>
           }

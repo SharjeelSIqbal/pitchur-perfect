@@ -125,12 +125,12 @@ export default class Pitch extends React.Component {
       <div>
         <Header />
         {this.state.loading &&
-          <div className="row justify-center-all padding-input">
+          <div className="row justify-center-all padding-input absolute-loading">
             <div className="lds-facebook loading"><div></div><div></div><div></div></div>
           </div>
         }
         { this.state.failed && <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2> }
-        {!this.state.failed &&
+        {!this.state.failed && !this.state.loading &&
         <>
         <div className="row justify-center-all padding-input">
           <div className="row justify-center-all background-pitch">
@@ -156,7 +156,6 @@ export default class Pitch extends React.Component {
         </div>
         </div>
         <div className="note-margin col-100 row justify-center-all">
-          {this.state.isOn}
           <div className="pitch-buttons">
             <button className="button nice-button unicorn-barf gochi-hand sing"
               onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>
