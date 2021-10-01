@@ -12,9 +12,9 @@ export default class Keys extends React.Component {
   }
 
   playKey(e) {
-    const note = event.target.closest('div').id.split(' ')[0];
-    const octave = event.target.closest('div').id.split(' ')[1];
-    const frequency = event.target.closest('div').getAttribute('name');
+    const note = event.target.closest('button').id.split(' ')[0];
+    const octave = event.target.closest('button').id.split(' ')[1];
+    const frequency = event.target.closest('button').getAttribute('name');
     const currentKey = { note, octave, frequency };
     this.setState({ isPressed: true, currentKey }, () => {
       this.props.setKey(this.state.currentKey);

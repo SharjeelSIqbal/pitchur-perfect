@@ -40,9 +40,9 @@ export default class Pitch extends React.Component {
 
   async turnOnMic(e) {
     this.setState({ isOn: !this.state.isOn });
+
     const audioContext = new AudioContext();
     const analyserNode = audioContext.createAnalyser();
-
     this.mediaRecorder = await navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
         const sourceNode = audioContext.createMediaStreamSource(stream);
@@ -54,13 +54,14 @@ export default class Pitch extends React.Component {
   }
 
   matchPiano(e) {
-    this.setState({ tuneVoice: !this.state.tuneVoice }, () => {
-      this.turnOnMic();
-    });
+    this.setState({ tuneVoice: !this.state.tuneVoice });
+    // this.setState({ tuneVoice: true }, () => {
+    //   this.turnOnMic();
+    // });
   }
 
   stopMic(e) {
-    this.setState({ isOn: false });
+    this.setState({ isOn: false, tuneVoice: false });
   }
 
   measureFrequency() {
@@ -76,7 +77,7 @@ export default class Pitch extends React.Component {
           recordDifference = diff;
         }
       });
-    } if (this.state.isOn && this.state.tuneVoice) {
+    } if (this.state.tuneVoice) {
       if (this.state.currentKey) {
         this.closestNote = this.state.currentKey.note;
         this.closestOctave = this.state.currentKey.octave;
@@ -155,12 +156,21 @@ export default class Pitch extends React.Component {
         </div>
         </div>
         <div className="note-margin col-100 row justify-center-all">
+          {this.state.isOn}
           <div className="pitch-buttons">
-            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn && !this.state.tuneVoice ? this.stopMic : this.turnOnMic}>SING!</button>
+            <button className="button nice-button unicorn-barf gochi-hand sing"
+              onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>
+              {this.state.isOn ? 'Stop!' : 'Sing!'}
+            </button>
           </div>
-          <div className="pitch-buttons">
-            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.matchPiano}>Match!</button>
-          </div>
+          {this.state.isOn &&
+            <div className="pitch-buttons">
+              <button className="button nice-button unicorn-barf gochi-hand sing"
+              onClick={this.matchPiano}>
+                {this.state.tuneVoice ? 'Sing!' : 'Match!'}
+              </button>
+            </div>
+          }
         </div>
         <div>
           <Piano callback={this.currentPianoKey} notes={this.state.notes} />
