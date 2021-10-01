@@ -3,6 +3,7 @@ export default class Recordings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sent: false,
       recording: false,
       recordings: [],
       formInputs: false,
@@ -81,6 +82,7 @@ export default class Recordings extends React.Component {
 
   saveAudioToProfile(e) {
     e.preventDefault();
+    this.setState({ sent: true });
     const formData = new FormData();
     const userId = 1;
     const title = this.state.title;
@@ -95,10 +97,10 @@ export default class Recordings extends React.Component {
     })
       .then(response => {
         response.json();
-        this.setState({ formInputs: false, recordings: [] });
+        this.setState({ formInputs: false, recordings: [], sent: false });
       })
       .catch(err => {
-        this.setState({ failed: true });
+        this.setState({ failed: true, sent: false });
         console.error(err);
       });
   }
@@ -123,7 +125,7 @@ export default class Recordings extends React.Component {
 
       <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color"
         onKeyUp={e => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' && !this.state.sent) {
             this.saveAudioToProfile(e);
           }
         }}>
