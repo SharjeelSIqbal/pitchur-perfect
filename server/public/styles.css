@@ -70,7 +70,7 @@ select {
   right: 0;
   left: 0;
   background-image: linear-gradient(#5158fe, #e651fe);
-  overflow: scroll;
+  overflow: auto;
 }
 
 .padding-record {
@@ -179,14 +179,14 @@ select {
 }
 
 .openAudio {
-  overflow: scroll;
-  transition: height 1s;
+  overflow: clip;
+  transition: all 1s;
   height: 100px;
 }
 
 .closeAudio {
-  overflow: scroll;
-  transition: height 1s;
+  overflow: clip;
+  transition: all 1s;
   height: 0;
 }
 
@@ -276,7 +276,6 @@ select {
 
 .piano {
   display: flex;
-  overflow-x: scroll;
   width: 3000px;
 }
 
@@ -291,8 +290,7 @@ select {
 
 .piano-scroll {
   overflow-x: scroll;
-  overflow-y: scroll;
-  max-width: 3000px;
+  padding-bottom: 0.5rem;
 }
 
 .small-padding {
@@ -341,7 +339,6 @@ select {
   }
 
   .recording-view-container {
-    overflow: scroll;
     width: 100%;
   }
 
