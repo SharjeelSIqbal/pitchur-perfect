@@ -1,7 +1,7 @@
 import React from 'react';
-import ViewRecording from '../components/viewRecording';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import ViewRecording from '../components/view-recording';
+import Header from '../components/header';
+import Footer from '../components/footer';
 
 export default class UserView extends React.Component {
   constructor(props) {

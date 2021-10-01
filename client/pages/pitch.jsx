@@ -1,7 +1,7 @@
 import React from 'react';
 import { PitchDetector } from 'pitchy';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/header';
+import Footer from '../components/footer';
 import Piano from '../components/piano';
 
 export default class Pitch extends React.Component {
