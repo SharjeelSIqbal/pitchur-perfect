@@ -43,10 +43,6 @@ select {
   font-size: 1.875rem;
 }
 
-.border-none {
-  border: none;
-}
-
 .nice-button {
   border-radius: 3rem;
 }
@@ -80,10 +76,6 @@ select {
 
 .padding-record {
   padding: 3rem;
-}
-
-.scroll {
-  overflow: scroll;
 }
 
 .footer-margin {
