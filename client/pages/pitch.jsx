@@ -55,9 +55,6 @@ export default class Pitch extends React.Component {
 
   matchPiano(e) {
     this.setState({ tuneVoice: !this.state.tuneVoice });
-    // this.setState({ tuneVoice: true }, () => {
-    //   this.turnOnMic();
-    // });
   }
 
   stopMic(e) {
