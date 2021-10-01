@@ -15,6 +15,7 @@ export default class Recordings extends React.Component {
     this.saveAudioToProfile = this.saveAudioToProfile.bind(this);
     this.discardAudio = this.discardAudio.bind(this);
     this.titleName = this.titleName.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   async componentDidMount() {
@@ -58,7 +59,7 @@ export default class Recordings extends React.Component {
     const blob = new Blob(this.chunks, { type: 'audio/webm' });
     const audioURL = URL.createObjectURL(blob);
     this.file = new File([blob], `${Date.now()}.webm`, { type: 'audio/webm' });
-    this.setState({ recordings: audioURL, formButtons: false });
+    this.setState({ recordings: audioURL });
   }
 
   time(duration) {
@@ -80,7 +81,6 @@ export default class Recordings extends React.Component {
   }
 
   saveAudioToProfile(e) {
-
     e.preventDefault();
     const formData = new FormData();
     const userId = 1;
@@ -121,7 +121,13 @@ export default class Recordings extends React.Component {
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
 
     return (
-      <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color">
+
+      <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color"
+        onKeyUp={e => {
+          if (e.key === 'Enter') {
+            this.saveAudioToProfile(e);
+          }
+        }}>
         {this.state.failed
           ? <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2>
           : <>
@@ -140,11 +146,11 @@ export default class Recordings extends React.Component {
           {recording && <button onClick={e => this.stopRecording(e)} className={`${recordButtonClassName} shadow-pressed`}>{recordInner}</button>}
         </div>
         <div className={`row justify-center-all ${paddingBottom}`}>
-        {formInputs && (
+        {formInputs &&
           <audio controls="controls">
-                <source src={recordings} />
-              </audio>
-        )}
+            <source src={recordings} />
+          </audio>
+        }
         </div>
         {formInputs && (
           <div className="button-container margin-0-auto">
@@ -155,8 +161,8 @@ export default class Recordings extends React.Component {
               </button>
             </div>
             <div className="col-50 row justify-center-all">
-              <button className="button submit-button" type="submit">
-                Submit
+              <button type="submit" className="button submit-button">
+              Submit
               </button>
             </div>
           </div>

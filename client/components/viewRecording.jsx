@@ -16,7 +16,7 @@ export default function RecordingView(props) {
         <div className="recording-view-container" >
           <div onClick={() => setChosen(!chosen)}>
             <div className="pointer row justify-between">
-              <h1 className="remove-start-margin">{props.recording.title}</h1>
+                  <h1 className="remove-start-margin">{props.recording.title}</h1>
             </div>
             <div className="row justify-between">
               <h3>{`${recordedDate}`}</h3>

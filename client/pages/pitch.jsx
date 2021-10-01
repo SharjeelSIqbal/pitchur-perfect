@@ -39,7 +39,6 @@ export default class Pitch extends React.Component {
   }
 
   async turnOnMic(e) {
-
     this.setState({ isOn: !this.state.isOn });
     const audioContext = new AudioContext();
     const analyserNode = audioContext.createAnalyser();
