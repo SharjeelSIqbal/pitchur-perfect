@@ -8,15 +8,23 @@ export default function RecordingView(props) {
   const [isDeleted, setIsDeleted] = useState(false);
   const audioClassName = chosen ? 'openAudio' : 'closeAudio';
   return (
+
     <>
+
     {!isDeleted &&
      <>
       <div className={'view-container margin-0-auto font-pair wrap-container'}>
       <div className="col-100 margin-0-auto">
         <div className="recording-view-container" >
+              <div className={`absolute-indicator ${chosen && 'turn-around'}`}>
+                <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.5 21.9167C17.253 21.9167 21.9167 17.253 21.9167 11.5C21.9167 5.74707 17.253 1.08337 11.5 1.08337C5.74707 1.08337 1.08337 5.74707 1.08337 11.5C1.08337 17.253 5.74707 21.9167 11.5 21.9167Z" stroke="#4C4F9C" strokeWidth="2.08333" />
+                  <path d="M7.33337 9.9375L11.5 14.1042L15.6667 9.9375" stroke="#4C4F9C" strokeWidth="2.08333" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
           <div onClick={() => setChosen(!chosen)}>
             <div className="pointer row justify-between">
-                  <h1 className="remove-start-margin">{props.recording.title}</h1>
+               <h1 className="remove-start-margin">{props.recording.title}</h1>
             </div>
             <div className="row justify-between">
               <h3>{`${recordedDate}`}</h3>
