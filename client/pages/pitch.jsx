@@ -136,7 +136,7 @@ export default class Pitch extends React.Component {
           <div className="row justify-center-all background-pitch">
           <div className="background-pitch-inner row justify-center-all font-pair">
             <div>
-                <div className={`${correct} note-margin col-100 row justify-center-all`}>
+                <div className={`${correct} note note-margin col-100 row justify-center-all`}>
                 <h1 className="note-size remove-start-margin" id="pitch">
                   {`${this.closestNote ? this.closestNote : ''}`}
                   <span className="octave">{this.closestOctave}</span>
