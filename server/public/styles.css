@@ -13,7 +13,7 @@ select {
   height: 40px;
   padding: 5px;
   border: 1px lightgray solid;
-  font-size: 16px;
+  font-size: 1rem;
   width: 240px;
 }
 
@@ -36,11 +36,11 @@ select {
 }
 
 .header-pair-size {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .title-font-size {
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 .border-none {
@@ -143,7 +143,7 @@ select {
 .title-input {
   text-align: center;
   font-family: "Gochi Hand", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 30px;
+  font-size: 1.875rem;
   width: 250px;
   height: 2rem;
   border: none;
@@ -163,7 +163,7 @@ select {
 }
 
 .button {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: whitesmoke;
   border: none;
   border-radius: 0.5rem;
@@ -223,11 +223,11 @@ select {
 }
 
 .octave {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .note-size {
-  font-size: 72px;
+  font-size: 4.5rem;
 }
 
 .note-margin {
@@ -243,7 +243,7 @@ select {
 }
 
 .sing {
-  font-size: 32px;
+  font-size: 2rem;
 }
 
 .note {
