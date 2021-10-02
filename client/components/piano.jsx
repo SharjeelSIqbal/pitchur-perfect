@@ -28,8 +28,8 @@ export default class Piano extends React.Component {
           }
         </select>
       </div>
-      <div className="piano-scroll col-100">
-        <div className="piano small-padding">
+      <div className="piano-scroll row justify-center-all">
+        <div className="piano row small-padding">
             {this.props.notes && this.props.notes.map(element => <Key key={element.frequency} setKey={this.props.callback} type={this.state.currentType} note={element}/>)}
         </div>
       </div>

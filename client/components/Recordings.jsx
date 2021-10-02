@@ -3,11 +3,13 @@ export default class Recordings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sent: false,
       recording: false,
       recordings: [],
       formInputs: false,
       title: '',
-      duration: 0
+      duration: 0,
+      loading: false
     };
     this.captureAudio = this.captureAudio.bind(this);
     this.startRecording = this.startRecording.bind(this);
@@ -36,12 +38,14 @@ export default class Recordings extends React.Component {
 
   startRecording(e) {
     e.preventDefault();
-    this.setState({ recordings: null });
-    this.chunks = [];
-    this.mediaRecorder.start(10);
-    this.setState({ recording: true, formInputs: false, duration: 0 }, () => {
-      this.startTime = Date.now();
-    });
+    if (!this.state.formInputs) {
+      this.setState({ recordings: null });
+      this.chunks = [];
+      this.mediaRecorder.start(10);
+      this.setState({ recording: true, duration: 0 }, () => {
+        this.startTime = Date.now();
+      });
+    }
   }
 
   stopRecording(e) {
@@ -56,7 +60,7 @@ export default class Recordings extends React.Component {
     const blob = new Blob(this.chunks, { type: 'audio/webm' });
     const audioURL = URL.createObjectURL(blob);
     this.file = new File([blob], `${Date.now()}.webm`, { type: 'audio/webm' });
-    this.setState({ recordings: audioURL, formButtons: false });
+    this.setState({ recordings: audioURL });
   }
 
   time(duration) {
@@ -79,6 +83,7 @@ export default class Recordings extends React.Component {
 
   saveAudioToProfile(e) {
     e.preventDefault();
+    this.setState({ sent: true, loading: true });
     const formData = new FormData();
     const userId = 1;
     const title = this.state.title;
@@ -93,9 +98,12 @@ export default class Recordings extends React.Component {
     })
       .then(response => {
         response.json();
-        this.setState({ formInputs: false, recordings: [] });
+        this.setState({ formInputs: false, recordings: [], sent: false, loading: false });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        this.setState({ failed: true, sent: false, loading: false });
+        console.error(err);
+      });
   }
 
   discardAudio(e) {
@@ -115,7 +123,22 @@ export default class Recordings extends React.Component {
     const recordButtonClassName = 'col-100 outline record-button row justify-center-all';
 
     return (
-      <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color">
+      <>
+      {this.state.loading &&
+        <div className="row justify-center-all padding-input absolute-loading">
+          <div className="lds-facebook loading"><div></div><div></div><div></div></div>
+        </div>
+      }
+      {!this.state.loading &&
+      <form onSubmit={this.saveAudioToProfile} action="submit" className="background-color"
+      onKeyUp={e => {
+        if (e.key === 'Enter' && !this.state.loading) {
+          this.saveAudioToProfile(e);
+        }
+      }}>
+        {this.state.failed
+          ? <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2>
+          : <>
           <div className="row justify-center-all">
             {formInputs &&
             <div className="padding-input">
@@ -131,14 +154,14 @@ export default class Recordings extends React.Component {
           {recording && <button onClick={e => this.stopRecording(e)} className={`${recordButtonClassName} shadow-pressed`}>{recordInner}</button>}
         </div>
         <div className={`row justify-center-all ${paddingBottom}`}>
-        {formInputs && (
-              <audio controls="controls">
-                <source src={recordings} />
-              </audio>
-        )}
+        {formInputs &&
+          <audio controls="controls">
+            <source src={recordings} />
+          </audio>
+        }
         </div>
         {formInputs && (
-        <div className="button-container margin-0-auto">
+          <div className="button-container margin-0-auto">
           <div className="padding-button-bottom col-100 row justify-evenly">
             <div className="row justify-center-all col-50">
               <button className="button discard-button" onClick={this.discardAudio}>
@@ -146,14 +169,17 @@ export default class Recordings extends React.Component {
               </button>
             </div>
             <div className="col-50 row justify-center-all">
-              <button className="button submit-button" type="submit">
-                Submit
+              <button type="submit" className="button submit-button">
+              Submit
               </button>
             </div>
           </div>
         </div>)}
+        </>
+      }
       </form>
-
+      }
+      </>
     );
   }
 }

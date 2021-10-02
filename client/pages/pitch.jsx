@@ -1,7 +1,7 @@
 import React from 'react';
 import { PitchDetector } from 'pitchy';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/header';
+import Footer from '../components/footer';
 import Piano from '../components/piano';
 
 export default class Pitch extends React.Component {
@@ -13,7 +13,9 @@ export default class Pitch extends React.Component {
       isOn: false,
       currentKey: {},
       tuneVoice: false,
-      isHitting: false
+      isHitting: false,
+      loading: true,
+      failed: false
     };
     this.closestNote = null;
     this.closestOctave = null;
@@ -29,16 +31,18 @@ export default class Pitch extends React.Component {
   async componentDidMount() {
     await fetch('/api/notes')
       .then(response => response.json())
-      .then(result => this.setState({ notes: result }))
-      .catch(err => console.error(err));
+      .then(result => this.setState({ failed: false, notes: result, loading: false }))
+      .catch(err => {
+        this.setState({ failed: true, loading: false });
+        return console.error(err);
+      });
   }
 
   async turnOnMic(e) {
-
     this.setState({ isOn: !this.state.isOn });
+
     const audioContext = new AudioContext();
     const analyserNode = audioContext.createAnalyser();
-
     this.mediaRecorder = await navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
         const sourceNode = audioContext.createMediaStreamSource(stream);
@@ -50,13 +54,11 @@ export default class Pitch extends React.Component {
   }
 
   matchPiano(e) {
-    this.setState({ tuneVoice: !this.state.tuneVoice }, () => {
-      this.turnOnMic();
-    });
+    this.setState({ tuneVoice: !this.state.tuneVoice });
   }
 
   stopMic(e) {
-    this.setState({ isOn: false });
+    this.setState({ isOn: false, tuneVoice: false });
   }
 
   measureFrequency() {
@@ -72,7 +74,7 @@ export default class Pitch extends React.Component {
           recordDifference = diff;
         }
       });
-    } if (this.state.isOn && this.state.tuneVoice) {
+    } if (this.state.tuneVoice) {
       if (this.state.currentKey) {
         this.closestNote = this.state.currentKey.note;
         this.closestOctave = this.state.currentKey.octave;
@@ -119,11 +121,19 @@ export default class Pitch extends React.Component {
     return (
       <div>
         <Header />
+        {this.state.loading &&
+          <div className="row justify-center-all padding-input absolute-loading">
+            <div className="lds-facebook loading"><div></div><div></div><div></div></div>
+          </div>
+        }
+        { this.state.failed && <h2 className="font-pair text-align-center no-recordings">Problems with the network, please try again later</h2> }
+        {!this.state.failed && !this.state.loading &&
+        <>
         <div className="row justify-center-all padding-input">
           <div className="row justify-center-all background-pitch">
           <div className="background-pitch-inner row justify-center-all font-pair">
             <div>
-                <div className={`${correct} note-margin col-100 row justify-center-all`}>
+                <div className={`${correct} note note-margin col-100 row justify-center-all`}>
                 <h1 className="note-size remove-start-margin" id="pitch">
                   {`${this.closestNote ? this.closestNote : ''}`}
                   <span className="octave">{this.closestOctave}</span>
@@ -144,17 +154,27 @@ export default class Pitch extends React.Component {
         </div>
         <div className="note-margin col-100 row justify-center-all">
           <div className="pitch-buttons">
-            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.state.isOn && !this.state.tuneVoice ? this.stopMic : this.turnOnMic}>SING!</button>
+            <button className="button nice-button unicorn-barf gochi-hand sing"
+              onClick={this.state.isOn ? this.stopMic : this.turnOnMic}>
+              {this.state.isOn ? 'Stop!' : 'Sing!'}
+            </button>
           </div>
-          <div className="pitch-buttons">
-            <button className="button nice-button unicorn-barf gochi-hand sing" onClick={this.matchPiano}>Match!</button>
-          </div>
+          {this.state.isOn &&
+            <div className="pitch-buttons">
+              <button className="button nice-button unicorn-barf gochi-hand sing"
+              onClick={this.matchPiano}>
+                {this.state.tuneVoice ? 'Sing!' : 'Match!'}
+              </button>
+            </div>
+          }
         </div>
         <div>
           <Piano callback={this.currentPianoKey} notes={this.state.notes} />
         </div>
-        <div className="mobile-only footer-margin">
+        </>
+        }
           <Footer />
+        <div className="mobile-only footer-margin">
         </div>
       </div>
     );
