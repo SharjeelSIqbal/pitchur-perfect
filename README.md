@@ -40,8 +40,7 @@ A full stack JavaScript application for singers who want to develop their vocal 
 ![Get current pitch](https://user-images.githubusercontent.com/50930123/135955418-a3467f66-fe6a-46c5-8acd-44a5ba11e3d1.gif)
 
 ### User can match their pitch with a piano key
-![Uploading Match Pitch.gif…]()
-
+![Match Pitch](https://user-images.githubusercontent.com/50930123/135955490-e52f4e0f-104e-4412-8149-d407f3dcbdf0.gif)
 
 
 ### Features to come
@@ -49,14 +48,14 @@ A full stack JavaScript application for singers who want to develop their vocal 
 * User can sign up
 * User can sign in
 * User can choose his vocal range
-* User can can see his practiced matching stats
+* User can can see his stats for matching keys
 
 
 ### System Requirements
 * Node.js 10 or higher
 * NPM 6 or higher
 * Microphone
-* Linux interface Docker or Commander
+* Linux interface (Docker or Commander)
 
 
 
