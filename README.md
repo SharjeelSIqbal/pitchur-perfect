@@ -93,3 +93,6 @@ npm run db:import
 pgweb --db=pitchurPerfect
 ```
 9. Start coding!
+``` shell
+npm run dev
+```
