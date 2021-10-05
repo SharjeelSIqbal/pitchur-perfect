@@ -82,7 +82,7 @@ sudo service postgresql start
 ``` shell
 createdb pitchurPerfect
 ```
-6. Import the example database to postgreSQL
+6. Import the example database to PostgreSQL
 ``` shell
 npm run db:import
 ```
