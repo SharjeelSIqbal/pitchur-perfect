@@ -65,7 +65,7 @@ A full stack JavaScript application for singers who want to develop their vocal 
 ``` shell
 git clone git@github.com:SharjeelSIqbal/pitchur-perfect.git
 ```
-2. Install all dependencies with NPM
+2. Install all dependencies with npm
 ``` shell
 npm install
 ```
