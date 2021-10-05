@@ -21,6 +21,7 @@ A full stack JavaScript application for singers who want to develop their vocal 
 
 ## Features
 ### User can create a recording
+![Create](https://user-images.githubusercontent.com/50930123/135955860-2809b136-23a4-415a-9988-f7c7ffa15191.gif)
 
 ### User can save a recording
 ![Recording](https://user-images.githubusercontent.com/50930123/135955354-a1ab4e26-e523-4bdc-a248-c58ffd0b6d33.gif)
