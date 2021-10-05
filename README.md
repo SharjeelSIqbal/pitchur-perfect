@@ -2,47 +2,46 @@
 A full stack JavaScript application for singers who want to develop their vocal range
 
 ## Technologies Used
--Express.js
--Multer
--JavaScript ES6
--React.js
--Webpack
--Node.js
--PostgreSQL
--HTML5
--CSS3
--Heroku
--AWS S3
--Web Audio API
+* Express.js
+* Multer
+* JavaScript ES6
+* React.js
+* Webpack
+* Node.js
+* PostgreSQL
+* HTML5
+* CSS3
+* Heroku
+* AWS S3
+* Web Audio API
 
 ## Live Demo
  Try the application live at https://pitchur-perfect.herokuapp.com/
 
 ## Features
--User can create a recording
--User can save a recording
--User can view a recording
--User can like a recording
--User can delete a recording
--User can play the piano
--User can find their pitch
--User can match their pitch with a piano key
-
+### User can create a recording
+### User can save a recording
+### User can view a recording
+### User can like a recording
+### User can delete a recording
+### User can play the piano
+### User can find their pitch
+### User can match their pitch with a piano key
 
 
 ### Features to come
--User can view his favorite recordings
--User can sign up
--User can sign in
--User can choose his vocal range
--User can can see his practiced matching stats
+* User can view his favorite recordings
+* User can sign up
+* User can sign in
+* User can choose his vocal range
+* User can can see his practiced matching stats
 
 
 ### System Requirements
--Node.js 10 or higher
--NPM 6 or higher
--Microphone
--Linux interface Docker or Commander
+* Node.js 10 or higher
+* NPM 6 or higher
+* Microphone
+* Linux interface Docker or Commander
 
 
 
