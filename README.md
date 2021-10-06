@@ -87,8 +87,8 @@ A full stack JavaScript application for singers who want to develop their vocal 
 
 ### Features to come
 * User can view his favorite recordings
-* User can sign up
-* User can sign in
+* User can sign up for an account 
+* User can sign in to an account
 * User can choose his vocal range
 * User can can see his stats for matching keys
 
@@ -128,7 +128,7 @@ sudo service postgresql start
 ``` shell
 createdb pitchurPerfect
 ```
-6. Import the example database to postgreSQL
+6. Import the example database to PostgreSQL
 ``` shell
 npm run db:import
 ```
@@ -139,3 +139,6 @@ npm run db:import
 pgweb --db=pitchurPerfect
 ```
 9. Start coding!
+``` shell
+npm run dev
+```
