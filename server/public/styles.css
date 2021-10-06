@@ -63,6 +63,16 @@ select {
   background-color: #5158fe;
 }
 
+.auth-form-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translate(0, 25%);
+  max-width: 80%;
+}
+
 .container-background-color {
   position: fixed;
   z-index: 0;
@@ -327,6 +337,36 @@ select {
   transition: transform 0.5s;
 }
 
+/* Login Sign-up */
+.auth-input {
+  padding: 0.5rem 0 0.5rem 1rem;
+  font-size: 24px;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.auth-div {
+  margin: 2rem 0 0;
+}
+
+.label {
+  color: whitesmoke;
+  font-size: 24px;
+}
+
+.sign-in-space {
+  align-items: flex-end;
+}
+
+.sign-up-in-a-tag {
+  color: whitesmoke;
+  text-decoration: underline whitesmoke;
+}
+
+.auth-button {
+  background-color: #5258fe;
+}
+
 @media only screen and (max-width: 366px) {
   h1 {
     font-size: 1.5em;
@@ -408,5 +448,18 @@ select {
   .title-input {
     width: 400px;
     height: 3rem;
+  }
+
+  .sign-up-in-a-tag {
+    color: blue;
+    text-decoration: underline blue;
+  }
+
+  .label {
+    color: black;
+  }
+
+  .auth-form-container {
+    max-width: 600px;
   }
 }

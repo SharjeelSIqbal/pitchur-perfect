@@ -3,6 +3,7 @@ import View from './pages/view';
 import Home from './pages/home';
 import Pitch from './pages/pitch';
 import parseRoute from './lib/parse-route';
+import AuthPage from './pages/auth-page';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -37,8 +38,8 @@ export default class App extends React.Component {
     <>
 
     <div className="container-background-color">
-
-    {this.renderPage()}
+      <AuthPage />
+    {/* {this.renderPage()} */}
     </div>
     </>
     );
