@@ -3,13 +3,14 @@ import View from './pages/view';
 import Home from './pages/home';
 import Pitch from './pages/pitch';
 import parseRoute from './lib/parse-route';
-import AuthPage from './pages/auth-page';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      isAuthorizing: false,
+      user: null
     };
 
   }
@@ -35,13 +36,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-    <>
-
     <div className="container-background-color">
-      <AuthPage />
-    {/* {this.renderPage()} */}
+    {this.renderPage()}
     </div>
-    </>
     );
   }
 }

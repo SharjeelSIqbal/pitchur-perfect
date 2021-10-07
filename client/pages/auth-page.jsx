@@ -13,9 +13,7 @@ export default class AuthPage extends React.Component {
     return (
       <>
         <Header/>
-
          <AuthForm />
-
         <Footer />
       </>
     );

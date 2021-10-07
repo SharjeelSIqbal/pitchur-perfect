@@ -139,7 +139,8 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     })
     .then(result => {
       const [user] = result.rows;
-      res.sendStatus(201).json(user);
+      res.status(201).json(user);
+
     })
     .catch(err => next(err));
 });
