@@ -63,6 +63,10 @@ select {
   background-color: #5158fe;
 }
 
+.record-view-padding {
+  margin: 1rem 0 0.5rem;
+}
+
 .container-background-color {
   position: fixed;
   z-index: 0;

@@ -26,7 +26,7 @@ export default function RecordingView(props) {
             <div className="pointer row justify-between">
                <h1 className="remove-start-margin">{props.recording.title}</h1>
             </div>
-            <div className="row justify-between">
+            <div className="record-view-padding row justify-between">
               <h3>{`${recordedDate}`}</h3>
               <h3>{props.recording.recordingLength}</h3>
             </div>
