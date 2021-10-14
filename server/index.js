@@ -32,10 +32,11 @@ app.get('/api/recordings/:userId', (req, res, next) => {
   const sql = `
   select *
   from "recordings"
-  where "userId" = ${userId}
+  where "userId" = $1
   order by "recordingId" desc
   `;
-  db.query(sql)
+  const params = [userId];
+  db.query(sql, params)
     .then(result => {
       res.status(200).json(result.rows);
     })
