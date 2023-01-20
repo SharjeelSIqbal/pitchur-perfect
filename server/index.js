@@ -6,11 +6,11 @@ const uploadRecordingsMiddleware = require('./recordings-middleware');
 const S3 = require('aws-sdk/clients/s3');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
-const Bucket = process.env.AWS_S3_BUCKET;
+const Bucket = process.env.S3_BUCKET;
 const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  Bucket: process.env.AWS_S3_BUCKET
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  Bucket: process.env.S3_BUCKET
 });
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
