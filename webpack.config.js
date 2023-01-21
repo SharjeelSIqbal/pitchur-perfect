@@ -36,7 +36,7 @@ module.exports = {
     host: 'local-ip',
     port: process.env.DEV_SERVER_PORT,
     proxy: {
-      '/api': `http://localhost:${process.env.PORT}`
+      '/api': `http://localhost:${process.env.PORT ? process.env.PORT : 3000}`
     }
   },
   performance: {
