@@ -13,16 +13,30 @@ const s3 = new S3({
   Bucket: process.env.S3_BUCKET
 });
 const db = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  host: process.env.DATABASE_URL,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DEV_SERVER_PORT
 });
 
 const app = express();
 
 app.use(staticMiddleware);
 app.use(express.json());
+
+app.get('/api/test', (req, res, next) => {
+  const sql = `
+  select * from "users";
+  `;
+
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
 app.get('/api/recordings/:userId', (req, res, next) => {
   const { userId } = req.params;

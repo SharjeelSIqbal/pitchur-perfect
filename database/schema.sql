@@ -45,4 +45,4 @@ CREATE TABLE "public"."favorite" (
 ALTER TABLE "recordings" ADD CONSTRAINT "recordings_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 
 ALTER TABLE "favorite" ADD CONSTRAINT "favorite_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
-ALTER TABLE "favorite" ADD CONSTRAINT "favorite_fk1" FOREIGN KEY ("recordingId") REFERENCES "recordings"("userId");
+ALTER TABLE "favorite" ADD CONSTRAINT "favorite_fk1" FOREIGN KEY ("recordingId") REFERENCES "recordings"("recordingId");
