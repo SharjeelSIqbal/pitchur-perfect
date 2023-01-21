@@ -3,15 +3,20 @@ const express = require('express');
 const pg = require('pg');
 const ClientError = require('./client-error');
 const uploadRecordingsMiddleware = require('./recordings-middleware');
-const S3 = require('aws-sdk/clients/s3');
+const { S3 } = require('@aws-sdk/client-s3');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const Bucket = process.env.S3_BUCKET;
-const s3 = new S3({
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  Bucket: process.env.S3_BUCKET
-});
+
+const s3Params = {
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
+  },
+  region: process.env.DB_REGION
+};
+
+const s3 = new S3(s3Params);
 const db = new pg.Pool({
   host: process.env.DATABASE_URL,
   user: process.env.DB_USERNAME,

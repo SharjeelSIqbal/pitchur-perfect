@@ -2,11 +2,17 @@ const path = require('path');
 const mime = require('mime');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const S3 = require('aws-sdk/clients/s3');
-const s3 = new S3({
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY
-});
+const { S3 } = require('@aws-sdk/client-s3');
+
+const s3Params = {
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
+  },
+  region: process.env.DB_REGION
+};
+
+const s3 = new S3(s3Params);
 
 const storage = multerS3({
   s3: s3,
