@@ -23,7 +23,7 @@ const db = new pg.Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DEV_SERVER_PORT
 });
-
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(staticMiddleware);
@@ -129,7 +129,7 @@ app.patch('/api/recordings/:recordingId', (req, res, next) => {
 });
 
 app.use(errorMiddleware);
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log(`express server listening on port ${process.env.PORT}`);
+  console.log(`express server listening on port ${port}`);
 });
