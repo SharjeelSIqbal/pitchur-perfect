@@ -3,39 +3,30 @@ import { PitchDetector } from 'pitchy';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import Piano from '../components/piano';
-
+import notes from '../piano-notes';
 export default class Pitch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentFrequency: null,
-      notes: null,
       isOn: false,
       currentKey: {},
       tuneVoice: false,
       isHitting: false,
-      loading: true,
+      loading: false,
       failed: false
     };
     this.closestNote = null;
     this.closestOctave = null;
     this.closestNoteFrequency = null;
+    this.closestNoteFrequencyDisplay = null;
+    this.currentFrequencyDisplay = null;
     this.closestHit = false;
     this.matchPiano = this.matchPiano.bind(this);
     this.updatePitch = this.updatePitch.bind(this);
     this.turnOnMic = this.turnOnMic.bind(this);
     this.stopMic = this.stopMic.bind(this);
     this.currentPianoKey = this.currentPianoKey.bind(this);
-  }
-
-  async componentDidMount() {
-    await fetch('/api/notes')
-      .then(response => response.json())
-      .then(result => this.setState({ failed: false, notes: result, loading: false }))
-      .catch(err => {
-        this.setState({ failed: true, loading: false });
-        return console.error(err);
-      });
   }
 
   async turnOnMic(e) {
@@ -65,12 +56,14 @@ export default class Pitch extends React.Component {
     if (!this.state.tuneVoice) {
       let recordDifference = Infinity;
       let diff = 0;
-      this.state.notes.forEach(element => {
+      notes.forEach(element => {
         diff = this.state.currentFrequency - element.frequency;
         if (Math.abs(diff) < Math.abs(recordDifference)) {
           this.closestNote = element.note;
           this.closestOctave = element.octave;
           this.closestNoteFrequency = element.frequency;
+          this.closestNoteFrequencyDisplay = this.closestNoteFrequency.toString().split('.');
+          this.closestNoteFrequencyDisplay = this.closestNoteFrequencyDisplay[0] + '.' + this.closestNoteFrequencyDisplay[1].slice(0, 3);
           recordDifference = diff;
         }
       });
@@ -89,10 +82,6 @@ export default class Pitch extends React.Component {
 
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-  }
-
   updatePitch(analyserNode, detector, input, sampleRate) {
     analyserNode.getFloatTimeDomainData(input);
     const [pitch, clarity] = detector.findPitch(input, sampleRate);
@@ -105,6 +94,7 @@ export default class Pitch extends React.Component {
             clarity: Math.round(clarity * 100)
           }, () =>
             this.measureFrequency());
+
           this.updatePitch(analyserNode, detector, input, sampleRate);
         },
         100
@@ -140,7 +130,7 @@ export default class Pitch extends React.Component {
                 </ h1>
               </div>
               <div className="row justify-center-all">
-                <h3 className="remove-start-margin">{this.closestNoteFrequency ? `Note Freq: ${this.closestNoteFrequency}Hz` : 'Note Freq:'}</h3>
+                <h3 className="remove-start-margin">{this.closestNoteFrequencyDisplay ? `Note Freq: ${this.closestNoteFrequencyDisplay}Hz` : 'Note Freq:'}</h3>
               </div>
               <div className="col-100 row justify-center-all">
                 <p className="remove-start-margin" id="pitch">{this.state.currentFrequency ? `Current Freq: ${this.state.currentFrequency}Hz` : 'Current Freq: 0Hz'}</p>
@@ -169,7 +159,7 @@ export default class Pitch extends React.Component {
           }
         </div>
         <div>
-          <Piano callback={this.currentPianoKey} notes={this.state.notes} />
+          <Piano callback={this.currentPianoKey} notes={notes} />
         </div>
         </>
         }

@@ -43,18 +43,6 @@ app.get('/api/recordings/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/notes', (req, res, next) => {
-  const sql = `
-  select *
-  from "notes"
-  order by "frequency" asc
-  `;
-  db.query(sql)
-    .then(result => res.status(200).json(result.rows))
-    .catch(err => next(err));
-
-});
-
 app.delete('/api/recordings/:id', (req, res, next) => {
   const { id } = req.params;
   if (isNaN(id)) {

@@ -41,16 +41,6 @@ CREATE TABLE "public"."favorite" (
 
 
 
-CREATE TABLE "public"."notes" (
-	"note" TEXT NOT NULL,
-	"frequency" numeric NOT NULL,
-	"octave" integer NOT NULL
-) WITH (
-  OIDS=FALSE
-);
-
-
-
 
 ALTER TABLE "recordings" ADD CONSTRAINT "recordings_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 
