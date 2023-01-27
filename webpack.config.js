@@ -2,8 +2,7 @@ require('dotenv/config');
 const path = require('path');
 
 const clientPath = path.join(__dirname, 'client');
-const serverPublicPath = path.join(__dirname, 'server/public');
-
+const serverPublicPath = path.join(__dirname, 'server', 'public');
 module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
